@@ -1,12 +1,23 @@
 import Link from "next/link";
+import { Navbar, Footer } from "../layouts";
 
 export default function Simulator() {
   return (
     <>
-      <h1>simulator 페이지!</h1>
-      <h2>
-        <Link href="/">홈으로 돌아가기</Link>
-      </h2>
+      <div className="container mx-auto md:px-20 px-6 md:mb-4 max-h-screen">
+        <header>
+          <div>
+            <Navbar />
+          </div>
+        </header>
+        <main>
+          <div>
+            <p>simulator page</p>
+            <Link href="/">홈으로 돌아가기</Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
