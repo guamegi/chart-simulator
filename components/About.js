@@ -66,11 +66,7 @@ export default function About() {
         </div>
         <div className="grid md:mt-40 mt-10 lg:grid-cols-2 gap-6">
           <div className=" flex justify-end md:pr-20 md:text-3xl items-center row-start-2 lg:row-start-1">
-            <p>
-              Practice trading and investing by yourself or join a game with
-              hundreds of thousands of other like-minded educated investors and
-              compete for the top rank.
-            </p>
+            <p>Practice trading and investing by yourself or join a game</p>
           </div>
           <div>
             <div className="flex justify-center items-center mx-2">
