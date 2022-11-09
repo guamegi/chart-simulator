@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <div className="navbar grid grid-cols-2 tracking-wide py-4 border-b">
+    <div className="navbar grid grid-cols-2 tracking-wide py-4">
       <div className="logo flex items-center">
         <h3 className="font-medium text-xl">
           <Link href="/">ChartSimulator</Link>

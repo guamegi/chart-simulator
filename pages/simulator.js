@@ -1,22 +1,21 @@
 import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
 import { Navbar, Footer } from "../layouts";
 
 export default function Simulator() {
   return (
-    <div className="container mx-auto md:px-20 px-6 md:mb-4 max-h-screen">
+    <div>
       <Head>
         <title>Simulator - Chart Simulator</title>
       </Head>
       <header>
-        <div>
+        <div className="px-4">
           <Navbar />
         </div>
       </header>
-      <main>
+      <main className="border-t">
         <div>
           <p>simulator page</p>
-          <Link href="/">홈으로 돌아가기</Link>
         </div>
       </main>
       <Footer />
