@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="container mx-auto md:px-20 px-6 md:mb-4 max-h-screen">
       <Head>
-        <title>Create Next App</title>
+        <title>Chart Simulator</title>
       </Head>
       <header>
         <div>
@@ -19,26 +19,27 @@ export default function Home() {
       </header>
       <main>
         <div className="grid grid-rows-2  lg:grid-rows-1 lg:grid-cols-2 md:gap-4 ">
-          <div className="">
-            <div className="font-bold text-4xl lg:text-6xl md:mt-10 mb-10 leading-tight ">
+          <div>
+            <div className="font-bold text-4xl md:mt-10 mb-10 leading-tight ">
               <section>Stock Market Simulator</section>
             </div>
             <div className="text-lg text-gray-600 m-2 my-4">
               <p>
-                The ChartSimulator Stock Market Simulator is FREE to join and
-                use
+                The ChartSimulator provides the data, knowledge, and confidence
+                to make better investment and trading decision in Bitcoin,
+                Ethereum and cryptocurrency markets.
               </p>
             </div>
             <div className="buttons my-10">
               {/* <Link href="/api/auth/login"> */}
               <Link href="/simulator">
-                <button className="border-2 border-black text-white font-bold bg-black p-4 rounded-md my-4 mr-4">
-                  Start Trading
+                <button className="border-2 border-black text-white bg-black p-4 my-4 mr-4 w-60">
+                  Get started
                 </button>
               </Link>
             </div>
           </div>
-          <div className="flex justify-center items-center row-start-1 row-end-2 lg:col-start-2">
+          <div className="flex justify-center items-center lg:col-start-2">
             <Image src={homeImage} alt="Illustration of Home pic" />
           </div>
         </div>

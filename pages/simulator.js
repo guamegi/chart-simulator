@@ -6,7 +6,7 @@ export default function Simulator() {
   return (
     <div className="container mx-auto md:px-20 px-6 md:mb-4 max-h-screen">
       <Head>
-        <title>Create Next App</title>
+        <title>Simulator - Chart Simulator</title>
       </Head>
       <header>
         <div>

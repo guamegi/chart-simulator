@@ -5,7 +5,7 @@ export default function About() {
   return (
     <div className="lg:mx-20 mx-4">
       <div className="">
-        <div className="font-medium lg:text-5xl text-2xl md:text-4xl lg:pr-20 md:pr-4 leading-tight uppercase">
+        <div className="flex font-medium justify-center text-3xl uppercase">
           Trusted by over three million educated investors
         </div>
         <div className="grid mt-40 lg:grid-cols-2 gap-6">
@@ -17,7 +17,7 @@ export default function About() {
               src="https://res.cloudinary.com/theashishmaurya/video/upload/v1629708809/share_x6gxly.mp4"
             />
           </div>
-          <div className=" flex  md:pl-10 justify-end md:text-3xl  items-center">
+          <div className="flex  md:pl-10 justify-end text-2xl  items-center">
             <p>Practice stock trading with virtual money.</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -33,8 +33,8 @@ export default function About() {
             </svg>
           </div>
         </div>
-        <div className="grid md:mt-40 mt-10 lg:grid-cols-2 md:gap-6 gap-4">
-          <div className=" flex justify-end md:pr-20 md:text-3xl items-center row-start-2 lg:row-start-1">
+        <div className="grid mt-40 lg:grid-cols-2 md:gap-6 gap-4">
+          <div className=" flex justify-end md:pr-20 text-2xl items-center row-start-2 lg:row-start-1">
             <p>Trade a wide range of stocks, ETFs, and options.</p>
           </div>
           <div>
@@ -49,7 +49,7 @@ export default function About() {
             </div>
           </div>
         </div>
-        <div className="grid md:mt-40 mt-10 lg:grid-cols-2 gap-6">
+        <div className="grid mt-40 lg:grid-cols-2 gap-6">
           <div>
             <div className="flex justify-center items-center mx-2">
               <video
@@ -60,12 +60,12 @@ export default function About() {
               />
             </div>
           </div>
-          <div className=" flex justify-end md:pr-20 md:text-3xl items-center ">
+          <div className="flex justify-end md:pr-20 text-2xl items-center ">
             <p>Trade by yourself or compete with others.</p>
           </div>
         </div>
-        <div className="grid md:mt-40 mt-10 lg:grid-cols-2 gap-6">
-          <div className=" flex justify-end md:pr-20 md:text-3xl items-center row-start-2 lg:row-start-1">
+        <div className="grid mt-40 lg:grid-cols-2 gap-6">
+          <div className="flex justify-end md:pr-20 text-2xl items-center row-start-2 lg:row-start-1">
             <p>Practice trading and investing by yourself or join a game</p>
           </div>
           <div>
@@ -81,15 +81,15 @@ export default function About() {
         </div>
         <div>
           <div className="flex justify-center my-40 items-center">
-            <div className="flex md:text-4xl text-xl md font-bold lg:mx-10 mx-2">
+            <div className="flex text-3xl font-bold lg:mx-10 mx-2">
               What are you waiting for?{" "}
             </div>
             <Link href="/api/auth/login">
-              <button className="border-2 border-black lg:p-4 font-bold text-sm lg:mx-8 flex py-2 px-1 items-center lg:text-2xl rounded-md ml-2 hover:text-white hover:bg-black">
+              <button className="border-2 border-black p-4 flex items-center ml-2 hover:text-white hover:bg-black">
                 Sign Up{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-9 w-8 flex items-center mx-2 hidden md:flex"
+                  className="h-7 w-7 flex items-center mx-2 hidden md:flex"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
