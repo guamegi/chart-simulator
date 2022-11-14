@@ -14,8 +14,9 @@ export default function Simulator() {
         </div>
       </header>
       <main className="border-t">
-        <div>
-          <p>simulator page</p>
+        <div className="grid grid-cols-2">
+          <div className="bg-red-200">dafsf</div>
+          <div className="bg-blue-200">dfa</div>
         </div>
       </main>
       <Footer />
