@@ -3,11 +3,11 @@ export default function Sidebar({ open }) {
     <div
       className={`${
         // open ? "hidden" : ""
-        open ? "translate-x-0 w-80 p-3" : "-translate-x-64 w-0"
-      } sticky flex flex-col h-screen  shadow transition-[width] ease-in-out duration-300`}
+        open ? "translate-x-0 w-80 p-4" : "-translate-x-64 w-0"
+      } sticky flex flex-col h-screen bg-white shadow transition-[width] ease-in-out duration-300`}
     >
       <div className="space-y-3">
-        <div className="space-y-3 pb-3 border-b">
+        <div className="space-y-3 pb-4 border-b">
           <div className="relative border border-slate-300 hover:border-slate-400">
             <input
               type="search"

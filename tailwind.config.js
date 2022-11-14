@@ -10,7 +10,13 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        128: "32rem",
+        164: "41rem",
+        192: "48rem",
+      },
+    },
   },
   variants: {
     extend: {},
