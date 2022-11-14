@@ -3,8 +3,8 @@ export default function Sidebar({ open }) {
     <div
       className={`${
         // open ? "hidden" : ""
-        open ? "translate-x-0 p-3" : "-translate-x-64 w-0 "
-      } sticky w-80 flex flex-col h-screen  shadow transition-[width] ease-in-out duration-300`}
+        open ? "translate-x-0 w-80 p-3" : "-translate-x-64 w-0"
+      } sticky flex flex-col h-screen  shadow transition-[width] ease-in-out duration-300`}
     >
       <div className="space-y-3">
         <div className="space-y-3 pb-3 border-b">
