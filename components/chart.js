@@ -1,7 +1,20 @@
+import { useEffect } from "react";
 import { AdvancedChart, SymbolInfo } from "react-tradingview-embed";
 
-export default function Chart() {
+export default function Chart({ code }) {
   // Todo: 선택 종목 name 받아오고, 해당 chart 생성
+
+  useEffect(() => {
+    console.log("컴포넌트가 화면에 나타남");
+    window.setTimeout(function () {
+      if (typeof TradingView !== "undefined") {
+        console.log(TradingView);
+      }
+    }, 500);
+    return () => {
+      console.log("컴포넌트가 화면에서 사라짐");
+    };
+  }, []);
 
   return (
     <div className="w-full h-full bg-white border border-slate-300">
@@ -21,12 +34,6 @@ export default function Chart() {
             onClick={() => console.log("1W click")}
           >
             1W
-          </button>
-          <button
-            className="bg-gray-100 w-10 px-auto py-1 mx-1 text-sm border border-slate-300 hover:border-slate-400"
-            onClick={() => console.log("1M click")}
-          >
-            1M
           </button>
         </div>
         <div className="flex-1"></div>
@@ -59,7 +66,8 @@ export default function Chart() {
             // autosize: true,
             // symbol: "NASDAQ:AAPL",
             symbol: "BINANCE:BTCUSDT",
-            // interval: "D",
+            // interval: "h",
+
             range: "1D",
             timezone: "Etc/UTC",
             theme: "light",
@@ -68,9 +76,72 @@ export default function Chart() {
             toolbar_bg: "#f1f3f6",
             hide_side_toolbar: true,
             withdateranges: true,
-            // enable_publishing: false,
+            // hide_legend: true,
+            enable_publishing: false,
             allow_symbol_change: true,
+            study_count_limit: 2,
+
             // container_id: "tradingview_9aad7",
+            // studies_overrides: {
+            //   "moving average exponential.length": 20,
+            // },
+
+            studies: [
+              // {
+              // "ROC@tv-basicstudies",
+              // "StochasticRSI@tv-basicstudies",
+              // "MASimple@tv-basicstudies",
+              // {
+              //   id: "MAExp@tv-basicstudies",
+              //   version: 60,
+              //   inputs: {
+              //     length: 20,
+              //   },
+              // },
+              // {
+              //   id: "IchimokuCloud@tv-basicstudies",
+              //   version: 2.0,
+              // },
+              // {
+              //   id: "BB@tv-basicstudies",
+              //   inputs: {
+              //     length: 25,
+              //   },
+              // },
+              // {
+              //   id: "MASimple@tv-basicstudies",
+              //   inputs: {
+              //     length: 200,
+              //   },
+              // },
+              // {
+              //   id: "MASimple@tv-basicstudies",
+              //   inputs: {
+              //     length: 100,
+              //   },
+              // },
+              // {
+              //   id: "MASimple@tv-basicstudies",
+              //   inputs: {
+              //     length: 50,
+              //   },
+              // },
+              // {
+              //   id: "MASimple@tv-basicstudies",
+              //   inputs: {
+              //     length: 9,
+              //   },
+              // },
+              // {
+              //   id: "RSI@tv-basicstudies",
+              // },
+              // {
+              //   id: "RSI@tv-basicstudies",
+              //   inputs: {
+              //     length: 4,
+              //   },
+              // },
+            ],
           }}
         />
       </div>
