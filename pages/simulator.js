@@ -1,9 +1,12 @@
 import Head from "next/head";
 import { useState } from "react";
 import { Navbar, Footer, Sidebar } from "../layouts";
-import { Chart, Result, Description } from "../components";
+import { Result, Description } from "../components";
 
-export default function Simulator() {
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("../components/chart"), { ssr: false });
+
+function Simulator() {
   const [open, setOpen] = useState(true);
 
   return (
@@ -61,3 +64,5 @@ export default function Simulator() {
     </div>
   );
 }
+
+export default Simulator;

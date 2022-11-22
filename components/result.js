@@ -1,4 +1,4 @@
-import { Screener } from "react-tradingview-embed";
+// import { Screener } from "react-tradingview-embed";
 
 export default function Result() {
   // TODO: 시뮬레이션 실행 후, 거래내역 데이터 리스트 표시
@@ -8,7 +8,7 @@ export default function Result() {
         Result
       </div>
       <div>
-        <Screener
+        {/* <Screener
           widgetProps={{
             width: "100%",
             height: 300,
@@ -19,7 +19,7 @@ export default function Result() {
             colorTheme: "light",
             locale: "en",
           }}
-        />
+        /> */}
       </div>
     </div>
   );
