@@ -4,18 +4,11 @@ import { createChart, CrosshairMode } from "lightweight-charts";
 import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 
-let chart = null;
 export default function Chart() {
-  // Todo: 선택 종목 name 받아오고, 해당 chart 생성
   const tvChartRef = useRef(); // trading view chart selector
 
   useEffect(() => {
     console.log("컴포넌트가 화면에 나타남");
-    // window.setTimeout(function () {
-    //   if (typeof TradingView !== "undefined") {
-    //     console.log(TradingView);
-    //   }
-    // }, 500);
     makeChart();
 
     return () => {
@@ -24,12 +17,15 @@ export default function Chart() {
   }, []);
 
   const makeChart = () => {
-    if (chart) {
-      chart.remove();
-      chart = null;
+    // if (chart) {
+    if (tvChartRef.current.children.length) {
+      console.log("chart 있음");
+      return;
     }
 
-    chart = createChart(tvChartRef.current, {
+    console.log("chart 없음");
+
+    const chart = createChart(tvChartRef.current, {
       width: tvChartRef.current.offsetWidth,
       height: 500,
       layout: {
@@ -147,7 +143,20 @@ export default function Chart() {
           </div>
         </div>
       </div>
-
+      <div className="flex p-3 text-gray-500 justify-end border-b">
+        <button
+          className="bg-gray-100 px-4 py-1 text-sm border border-slate-300 hover:border-slate-400"
+          onClick={() => console.log("simulation click")}
+        >
+          Go Simulation
+        </button>
+        {/* <button
+          className="px-4 py-1 text-sm text-white bg-black"
+          onClick={() => console.log("simulation click")}
+        >
+          Go Simulation
+        </button> */}
+      </div>
       <div>
         {/* <SymbolInfo
           widgetProps={{

@@ -45,12 +45,12 @@ function Simulator() {
                 </svg>
               </button>
               <div className="flex-1"></div>
-              <button
+              {/* <button
                 className="bg-white px-4 text-sm border border-slate-300 hover:border-slate-400"
                 onClick={() => console.log("simulation click")}
               >
                 Go Simulation
-              </button>
+              </button> */}
             </div>
             <div className="grid grid-cols-1 gap-6 my-3">
               <Chart />
