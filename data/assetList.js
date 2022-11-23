@@ -5,6 +5,7 @@ export const assetList = [
     symbol: "BTC",
     code_set: "KRW-BTC",
     category: "coin",
+    src: "/image/btc.png",
   },
   {
     name: "ethereum",
@@ -12,13 +13,15 @@ export const assetList = [
     symbol: "ETH",
     code_set: "KRW-ETH",
     category: "coin",
+    src: "/image/eth.png",
   },
   {
-    name: "ripple",
-    display_name: "Ripple",
+    name: "XRP",
+    display_name: "XRP",
     symbol: "XRP",
     code_set: "KRW-XRP",
     category: "coin",
+    src: "/image/xrp.png",
   },
   {
     name: "ada",
@@ -26,6 +29,7 @@ export const assetList = [
     symbol: "ADA",
     code_set: "KRW-ADA",
     category: "coin",
+    src: "/image/ada.png",
   },
   {
     name: "dogecoin",
@@ -33,5 +37,6 @@ export const assetList = [
     symbol: "DOGE",
     code_set: "KRW-DOGE",
     category: "coin",
+    src: "/image/doge.png",
   },
 ];

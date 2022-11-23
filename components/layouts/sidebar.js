@@ -6,6 +6,7 @@ export default function Sidebar({ open }) {
   console.log(assetList);
   const [modalOn, setModalOn] = useState(false);
   const [searchList, setSearchList] = useState([]);
+  const inputEl = useRef();
 
   const assetOnClick = () => setModalOn(!modalOn);
   const assetOnBlur = () => modalOn && setModalOn(false);
@@ -37,11 +38,12 @@ export default function Sidebar({ open }) {
             onBlur={assetOnBlur}
           >
             <input
+              ref={inputEl}
               type="search"
               name="Search"
               placeholder="Search..."
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
-              value={assetList[0].name}
+              // value={assetList[0].name}
               onChange={searchStock}
             />
             <span className="absolute inset-y-0 right-0 flex items-center py-1">
@@ -67,8 +69,17 @@ export default function Sidebar({ open }) {
               modalOn={modalOn}
               setModalOn={setModalOn}
               searchList={searchList}
+              ref={inputEl}
             />
           )}
+          {/* {
+            <AsssetPopup
+              modalOn={modalOn}
+              setModalOn={setModalOn}
+              searchList={searchList}
+              ref={inputEl}
+            />
+          } */}
 
           {/* indecator box */}
           <div className="relative border border-slate-300 hover:border-slate-400">
