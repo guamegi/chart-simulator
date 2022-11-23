@@ -24,7 +24,6 @@ export default function Chart() {
     }
 
     console.log("chart 없음");
-
     const chart = createChart(tvChartRef.current, {
       width: tvChartRef.current.offsetWidth,
       height: 500,
@@ -129,6 +128,12 @@ export default function Chart() {
           >
             1W
           </button>
+          <button
+            className="bg-gray-100 w-10 px-auto py-1 mx-1 text-sm border border-slate-300 hover:border-slate-400"
+            onClick={() => console.log("1Y click")}
+          >
+            1Y
+          </button>
         </div>
         <div className="flex-1"></div>
         <div>
@@ -137,7 +142,7 @@ export default function Chart() {
             <input
               type="search"
               name="Search"
-              placeholder="Search Indicators"
+              placeholder="date picker"
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
             />
           </div>
