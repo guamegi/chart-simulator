@@ -4,7 +4,7 @@ import Link from "next/link";
 // import homeImage from "../public/image/mainpage.png";
 import homeImage from "../public/image/chartImage.jpg";
 import { About } from "../components";
-import { Navbar, Footer } from "../layouts";
+import { Navbar, Footer } from "../components/layouts";
 
 export default function Home() {
   return (

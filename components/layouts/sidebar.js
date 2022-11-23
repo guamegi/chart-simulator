@@ -1,4 +1,26 @@
+import { useEffect, useRef, useState } from "react";
+import { assetList } from "../../data/assetList";
+import AsssetPopup from "../assetPopup";
+
 export default function Sidebar({ open }) {
+  console.log(assetList);
+  const [modalOn, setModalOn] = useState(false);
+  const [searchList, setSearchList] = useState([]);
+
+  const assetOnClick = () => setModalOn(!modalOn);
+  const assetOnBlur = () => modalOn && setModalOn(false);
+
+  // 종목 검색 필터
+  const searchStock = (e) => {
+    console.log(e.target.value);
+    // assetList에서 입력된 종목 검색
+    const words = assetList.filter((asset) =>
+      asset.name.includes(e.target.value.toLowerCase())
+    );
+    // console.log(words);
+    setSearchList(words);
+  };
+
   return (
     <div
       className={`${
@@ -8,16 +30,23 @@ export default function Sidebar({ open }) {
     >
       <div className="space-y-3">
         <div className="space-y-3 pb-4 border-b">
-          <div className="relative border border-slate-300 hover:border-slate-400">
+          {/* asset box */}
+          <div
+            className="relative border border-slate-300 hover:border-slate-400"
+            onClick={assetOnClick}
+            onBlur={assetOnBlur}
+          >
             <input
               type="search"
               name="Search"
               placeholder="Search..."
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
+              value={assetList[0].name}
+              onChange={searchStock}
             />
             <span className="absolute inset-y-0 right-0 flex items-center py-1">
               <button
-                type="submit"
+                // type="submit"
                 className="p-1 focus:outline-none focus:none"
               >
                 <svg
@@ -33,6 +62,15 @@ export default function Sidebar({ open }) {
               </button>
             </span>
           </div>
+          {modalOn && (
+            <AsssetPopup
+              modalOn={modalOn}
+              setModalOn={setModalOn}
+              searchList={searchList}
+            />
+          )}
+
+          {/* indecator box */}
           <div className="relative border border-slate-300 hover:border-slate-400">
             <input
               type="search"
