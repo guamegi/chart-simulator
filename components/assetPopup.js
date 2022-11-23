@@ -17,7 +17,7 @@ const AssetPopup = forwardRef((props, ref) => {
   const makeAssetList = (asset) => {
     return (
       <li key={asset.symbol} onClick={() => selectAssetList(asset)}>
-        <div className="flex p-1 hover:bg-gray-100 cursor-pointer">
+        <div className="flex p-1 text-gray-600 hover:bg-gray-100 cursor-pointer">
           <Image
             src={asset.src}
             alt="asset icon"
@@ -48,6 +48,6 @@ const AssetPopup = forwardRef((props, ref) => {
   );
 });
 
-// displayName을 준다.
-AssetPopup.displayName = "Search";
+// eslint 오류 방지
+AssetPopup.displayName = "AssetPopup";
 export default AssetPopup;
