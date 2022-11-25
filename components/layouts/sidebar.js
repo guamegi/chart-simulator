@@ -1,15 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { assetList } from "../../data/assetList";
 import AsssetPopup from "../assetPopup";
 
 export default function Sidebar({ open }) {
-  console.log(assetList);
   const [modalOn, setModalOn] = useState(false);
   const [searchList, setSearchList] = useState([]);
   const inputEl = useRef();
 
   const assetOnClick = () => setModalOn(!modalOn);
-  const assetOnBlur = () => modalOn && setModalOn(false);
+  const assetOnBlur = () => {
+    // 종목 팝업 리스트 이벤트 안 먹는 문제로 딜레이 시킴
+    setTimeout(() => {
+      modalOn && setModalOn(false);
+    }, 100);
+  };
 
   // 종목 검색 필터
   const searchStock = (e) => {
@@ -25,7 +29,6 @@ export default function Sidebar({ open }) {
   return (
     <div
       className={`${
-        // open ? "hidden" : ""
         open ? "translate-x-0 w-80 p-4" : "-translate-x-64 w-0"
       } sticky flex flex-col h-screen bg-white shadow transition-[width] ease-in-out duration-300`}
     >
@@ -64,6 +67,8 @@ export default function Sidebar({ open }) {
               </button>
             </span>
           </div>
+
+          {/* 종목 팝업 */}
           {modalOn && (
             <AsssetPopup
               modalOn={modalOn}
@@ -72,14 +77,6 @@ export default function Sidebar({ open }) {
               ref={inputEl}
             />
           )}
-          {/* {
-            <AsssetPopup
-              modalOn={modalOn}
-              setModalOn={setModalOn}
-              searchList={searchList}
-              ref={inputEl}
-            />
-          } */}
 
           {/* indecator box */}
           <div className="relative border border-slate-300 hover:border-slate-400">
@@ -138,9 +135,8 @@ export default function Sidebar({ open }) {
               {/* <p className="text-gray-800">BINANCE:BTCUSDT</p> */}
             </a>
             <li
-              className="flex items-center p-2 space-x-3 rounded-sm"
+              className="flex items-center p-2 space-x-3 rounded-sm cursor-pointer"
               code="BITMEX:XBTUSD"
-              // onClick={() => console.log("click 2")}
               onClick={clickList}
             >
               {/* <a

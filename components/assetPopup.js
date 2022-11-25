@@ -5,18 +5,19 @@ import { assetList } from "../data/assetList";
 // export default function AsssetPopup((props, ref)) {
 const AssetPopup = forwardRef((props, ref) => {
   const { modalOn, setModalOn, searchList } = props;
-
-  const selectAssetList = (asset) => {
-    // setModalOn(!modalOn);
+  const selectList = (asset) => {
+    setModalOn(!modalOn);
     console.log("select asset ", asset);
 
     // input 에 종목 표시 교체
     ref.current.value = asset.display_name;
+
+    // 차트 변경
   };
 
-  const makeAssetList = (asset) => {
+  const makeList = (asset) => {
     return (
-      <li key={asset.symbol} onClick={() => selectAssetList(asset)}>
+      <li key={asset.symbol} onClick={() => selectList(asset)}>
         <div className="flex p-1 text-gray-600 hover:bg-gray-100 cursor-pointer">
           <Image
             src={asset.src}
@@ -37,11 +38,12 @@ const AssetPopup = forwardRef((props, ref) => {
 
   return (
     <div className="relative">
+      {/* <div className={modalOn ? "relative" : "hidden relative"}> */}
       <div className="absolute bg-white border z-10 w-full">
         <ul>
           {searchList.length > 0
-            ? searchList.map((asset) => makeAssetList(asset))
-            : assetList.map((asset) => makeAssetList(asset))}
+            ? searchList.map((asset) => makeList(asset))
+            : assetList.map((asset) => makeList(asset))}
         </ul>
       </div>
     </div>
