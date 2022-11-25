@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { assetList } from "../../data/assetList";
 import AsssetPopup from "../assetPopup";
 
@@ -6,6 +6,11 @@ export default function Sidebar({ open }) {
   const [modalOn, setModalOn] = useState(false);
   const [searchList, setSearchList] = useState([]);
   const inputEl = useRef();
+
+  useEffect(() => {
+    // 종목 초기값 세팅
+    inputEl.current.value = assetList[0].display_name;
+  }, []);
 
   const assetOnClick = () => setModalOn(!modalOn);
   const assetOnBlur = () => {
@@ -44,7 +49,7 @@ export default function Sidebar({ open }) {
               ref={inputEl}
               type="search"
               name="Search"
-              placeholder="Search..."
+              placeholder="Search Assets"
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
               // value={assetList[0].name}
               onChange={searchStock}

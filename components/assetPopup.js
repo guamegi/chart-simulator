@@ -5,9 +5,10 @@ import { assetList } from "../data/assetList";
 // export default function AsssetPopup((props, ref)) {
 const AssetPopup = forwardRef((props, ref) => {
   const { modalOn, setModalOn, searchList } = props;
+
   const selectList = (asset) => {
-    setModalOn(!modalOn);
     console.log("select asset ", asset);
+    setModalOn(!modalOn);
 
     // input 에 종목 표시 교체
     ref.current.value = asset.display_name;
