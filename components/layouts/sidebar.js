@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { assetList } from "../../data/assetList";
+import { indicatorList } from "../../data/indicatorList";
 import AsssetPopup from "../assetPopup";
 
 export default function Sidebar({ open }) {
   const [modalOn, setModalOn] = useState(false);
-  const [searchList, setSearchList] = useState([]);
+  const [searchAssetList, setSearchAssetList] = useState([]);
+  const [searchIndicatorList, setSearchIndicatorList] = useState([]);
   const inputEl = useRef();
 
   useEffect(() => {
@@ -21,14 +23,52 @@ export default function Sidebar({ open }) {
   };
 
   // 종목 검색 필터
-  const searchStock = (e) => {
-    console.log(e.target.value);
+  const searchAsset = (e) => {
+    // console.log(e.target.value);
     // assetList에서 입력된 종목 검색
-    const words = assetList.filter((asset) =>
-      asset.name.includes(e.target.value.toLowerCase())
+    const list = assetList.filter((asset) =>
+      asset.name.toLocaleLowerCase().includes(e.target.value.toLowerCase())
     );
-    // console.log(words);
-    setSearchList(words);
+    // console.log(list);
+    setSearchAssetList(list);
+  };
+
+  // 보조지표 검색 필터
+  const searchIndicator = (e) => {
+    // console.log(e.target.value);
+    const text = e.target.value.toLowerCase();
+    const list = indicatorList.filter((indicator) =>
+      indicator.display_name.toLocaleLowerCase().includes(text)
+    );
+    // console.log(list);
+    setSearchIndicatorList(list);
+  };
+
+  const makeList = (indicator) => {
+    return (
+      <li
+        key={indicator.code}
+        className="flex items-center p-2 space-x-3 rounded-sm cursor-pointer"
+        code={indicator.code}
+        onClick={clickList}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5 text-gray-800 mx-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d={indicator.path}
+          />
+        </svg>
+        {indicator.display_name}
+      </li>
+    );
   };
 
   return (
@@ -52,7 +92,7 @@ export default function Sidebar({ open }) {
               placeholder="Search Assets"
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
               // value={assetList[0].name}
-              onChange={searchStock}
+              onChange={searchAsset}
             />
             <span className="absolute inset-y-0 right-0 flex items-center py-1">
               <button
@@ -78,18 +118,19 @@ export default function Sidebar({ open }) {
             <AsssetPopup
               modalOn={modalOn}
               setModalOn={setModalOn}
-              searchList={searchList}
+              searchAssetList={searchAssetList}
               ref={inputEl}
             />
           )}
 
-          {/* indecator box */}
+          {/* indicator box */}
           <div className="relative border border-slate-300 hover:border-slate-400">
             <input
               type="search"
               name="Search"
               placeholder="Search Indicators"
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
+              onChange={searchIndicator}
             />
             <span className="absolute inset-y-0 right-0 flex items-center py-1">
               <button
@@ -114,59 +155,39 @@ export default function Sidebar({ open }) {
             </span>
           </div>
         </div>
+        {/* indicator list */}
         <div className="flex-1">
           <ul className="pt-2 pb-4 space-y-1 text-sm">
-            <a
-              href="#"
-              code={"BINANCE:BTCUSDT"}
-              onClick={clickList}
-              className="flex items-center p-2 space-x-3 rounded-md"
-            >
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-gray-800"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                />
-              </svg> */}
-              BINANCE:BTCUSDT
-              {/* <p className="text-gray-800">BINANCE:BTCUSDT</p> */}
-            </a>
-            <li
-              className="flex items-center p-2 space-x-3 rounded-sm cursor-pointer"
-              code="BITMEX:XBTUSD"
-              onClick={clickList}
-            >
-              {/* <a
-                href="#"
-                code="BITMEX:XBTUSD"
-                onClick={clickList}
-                className="flex items-center p-2 space-x-3 rounded-md"
-              > */}
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-gray-800"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                />
-              </svg> */}
-              BITMEX:XBTUSD
-              {/* </a> */}
-            </li>
+            {searchIndicatorList.length > 0
+              ? searchIndicatorList.map((indicator) => makeList(indicator))
+              : indicatorList.map((indicator) => makeList(indicator))}
+
+            {/* {indicatorList.map((indicator) => {
+              return (
+                <li
+                  key={indicator.code}
+                  className="flex items-center p-2 space-x-3 rounded-sm cursor-pointer"
+                  code={indicator.code}
+                  onClick={clickList}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 text-gray-800 mx-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d={indicator.path}
+                    />
+                  </svg>
+                  {indicator.display_name}
+                </li>
+              );
+            })} */}
           </ul>
         </div>
       </div>

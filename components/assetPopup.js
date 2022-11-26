@@ -4,7 +4,7 @@ import { assetList } from "../data/assetList";
 
 // export default function AsssetPopup((props, ref)) {
 const AssetPopup = forwardRef((props, ref) => {
-  const { modalOn, setModalOn, searchList } = props;
+  const { modalOn, setModalOn, searchAssetList } = props;
 
   const selectList = (asset) => {
     console.log("select asset ", asset);
@@ -42,8 +42,8 @@ const AssetPopup = forwardRef((props, ref) => {
       {/* <div className={modalOn ? "relative" : "hidden relative"}> */}
       <div className="absolute bg-white border z-10 w-full">
         <ul>
-          {searchList.length > 0
-            ? searchList.map((asset) => makeList(asset))
+          {searchAssetList.length > 0
+            ? searchAssetList.map((asset) => makeList(asset))
             : assetList.map((asset) => makeList(asset))}
         </ul>
       </div>
