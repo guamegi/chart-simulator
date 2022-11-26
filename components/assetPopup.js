@@ -13,7 +13,7 @@ const AssetPopup = forwardRef((props, ref) => {
     // input 에 종목 표시 교체
     ref.current.value = asset.display_name;
 
-    // 차트 변경
+    // TODO: 차트 변경
   };
 
   const makeList = (asset) => {

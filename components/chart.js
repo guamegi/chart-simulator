@@ -5,7 +5,7 @@ import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 
 export default function Chart() {
-  const tvChartRef = useRef(); // trading view chart selector
+  const tvChartRef = useRef(); // trading view
 
   useEffect(() => {
     console.log("컴포넌트가 화면에 나타남");
@@ -65,8 +65,20 @@ export default function Chart() {
       chart.applyOptions({ height: newRect.height, width: newRect.width });
     }).observe(tvChartRef.current);
 
+    // line drawing test
+    // let lineSeries = chart.addLineSeries();
+    // lineSeries.setData([
+    //   { time: "2018-12-12", value: 144.11 },
+    //   { time: "2018-12-13", value: 131.74 },
+    //   { time: "2018-12-14", value: 121.74 },
+    //   { time: "2018-12-17", value: 130.74 },
+    //   { time: "2018-12-18", value: 121.74 },
+    // ]);
+
     let candleSeries = chart.addCandlestickSeries();
-    candleSeries.setData(priceData);
+    // candleSeries.setData(priceData[0].data);
+    // TODO: symbol 별 데이터 호출, 상태관리 라이브러리 써야 함. assetPopup에서 눌린 종목으로 차트 데이터 로딩.
+    candleSeries.setData(priceData[0].data);
 
     // marker 테스트
     candleSeries.setMarkers([
