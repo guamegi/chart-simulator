@@ -17,7 +17,8 @@
     "next-transpile-modules": "^10.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-tradingview-embed": "^3.0.6"
+    "react-tradingview-embed": "^3.0.6",
+    "zustand": "^4.1.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

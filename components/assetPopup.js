@@ -1,10 +1,9 @@
 import React, { forwardRef } from "react";
 import Image from "next/image";
-import { assetList } from "../data/assetList";
 
 // export default function AsssetPopup((props, ref)) {
 const AssetPopup = forwardRef((props, ref) => {
-  const { modalOn, setModalOn, searchAssetList } = props;
+  const { modalOn, setModalOn, assetList, searchAssetList } = props;
 
   const selectList = (asset) => {
     console.log("select asset ", asset);

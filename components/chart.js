@@ -4,6 +4,7 @@ import { createChart, CrosshairMode } from "lightweight-charts";
 import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 
+// TODO: 클릭시, props = assetInfo, indicatorInfo 받아야 함
 export default function Chart() {
   const tvChartRef = useRef(); // trading view
 

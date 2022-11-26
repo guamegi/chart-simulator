@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { assetList } from "../../data/assetList";
 import { indicatorList } from "../../data/indicatorList";
-import AsssetPopup from "../assetPopup";
+import useStore from "../../store/store";
+import AssetPopup from "../assetPopup";
 
 export default function Sidebar({ open }) {
   const [modalOn, setModalOn] = useState(false);
@@ -13,6 +14,10 @@ export default function Sidebar({ open }) {
     // 종목 초기값 세팅
     inputEl.current.value = assetList[0].display_name;
   }, []);
+
+  // store 에 저장(assetList)
+  const setAsset = useStore((state) => state.setAsset);
+  setAsset(assetList);
 
   const assetOnClick = () => setModalOn(!modalOn);
   const assetOnBlur = () => {
@@ -44,7 +49,7 @@ export default function Sidebar({ open }) {
     setSearchIndicatorList(list);
   };
 
-  const makeList = (indicator) => {
+  const makeIndicatorList = (indicator) => {
     return (
       <li
         key={indicator.code}
@@ -115,9 +120,10 @@ export default function Sidebar({ open }) {
 
           {/* 종목 팝업 */}
           {modalOn && (
-            <AsssetPopup
+            <AssetPopup
               modalOn={modalOn}
               setModalOn={setModalOn}
+              assetList={assetList}
               searchAssetList={searchAssetList}
               ref={inputEl}
             />
@@ -159,8 +165,10 @@ export default function Sidebar({ open }) {
         <div className="flex-1">
           <ul className="pt-2 pb-4 space-y-1 text-sm">
             {searchIndicatorList.length > 0
-              ? searchIndicatorList.map((indicator) => makeList(indicator))
-              : indicatorList.map((indicator) => makeList(indicator))}
+              ? searchIndicatorList.map((indicator) =>
+                  makeIndicatorList(indicator)
+                )
+              : indicatorList.map((indicator) => makeIndicatorList(indicator))}
 
             {/* {indicatorList.map((indicator) => {
               return (
