@@ -16,8 +16,8 @@ export default function Sidebar({ open }) {
   }, []);
 
   // store 에 저장(assetList)
-  const setAsset = useStore((state) => state.setAsset);
-  setAsset(assetList);
+  // const setAssetList = useStore((state) => state.setAssetList);
+  // setAssetList(assetList);
 
   const assetOnClick = () => setModalOn(!modalOn);
   const assetOnBlur = () => {

@@ -5,7 +5,8 @@ import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 
 // TODO: 클릭시, props = assetInfo, indicatorInfo 받아야 함
-export default function Chart() {
+export default function Chart(props) {
+  const selectedAsset = props.selectedAsset;
   const tvChartRef = useRef(); // trading view
 
   useEffect(() => {
@@ -17,14 +18,13 @@ export default function Chart() {
     };
   }, []);
 
-  const makeChart = () => {
-    // if (chart) {
-    if (tvChartRef.current.children.length) {
-      console.log("chart 있음");
-      return;
-    }
+  useEffect(() => {
+    // console.log("selected");
+    makeChart();
+  }, [selectedAsset]);
 
-    console.log("chart 없음");
+  const makeChart = () => {
+    tvChartRef.current.innerHTML = "";
     const chart = createChart(tvChartRef.current, {
       width: tvChartRef.current.offsetWidth,
       height: 500,
@@ -76,10 +76,28 @@ export default function Chart() {
     //   { time: "2018-12-18", value: 121.74 },
     // ]);
 
+    // symbol 별 데이터 호출, assetPopup에서 눌린 종목으로 차트 데이터 로딩.
+    // candle
     let candleSeries = chart.addCandlestickSeries();
-    // candleSeries.setData(priceData[0].data);
-    // TODO: symbol 별 데이터 호출, 상태관리 라이브러리 써야 함. assetPopup에서 눌린 종목으로 차트 데이터 로딩.
-    candleSeries.setData(priceData[0].data);
+    const filteredAsset = priceData.find((d) => d.symbol == selectedAsset);
+
+    // volume
+    let volumeSeries = chart.addHistogramSeries({
+      priceFormat: {
+        type: "volume",
+      },
+      priceScaleId: "",
+      scaleMargins: {
+        top: 0.8,
+        bottom: 0,
+      },
+    });
+    const filteredVolume = volumeData.find((d) => d.symbol == selectedAsset);
+
+    if (filteredAsset && filteredVolume) {
+      candleSeries.setData(filteredAsset.data);
+      volumeSeries.setData(filteredVolume.data);
+    }
 
     // marker 테스트
     candleSeries.setMarkers([
@@ -108,24 +126,12 @@ export default function Chart() {
         size: 2,
       },
     ]);
-
-    let volumeSeries = chart.addHistogramSeries({
-      priceFormat: {
-        type: "volume",
-      },
-      priceScaleId: "",
-      scaleMargins: {
-        top: 0.8,
-        bottom: 0,
-      },
-    });
-    volumeSeries.setData(volumeData);
   };
 
   return (
     <div className="w-full h-full bg-white border border-slate-300">
       <div className="p-3 font-medium text-gray-500 border-b truncate">
-        Bitcoin
+        {selectedAsset}
       </div>
       <div className="flex p-3 text-gray-500 border-b">
         <div className="">
@@ -168,12 +174,6 @@ export default function Chart() {
         >
           Go Simulation
         </button>
-        {/* <button
-          className="px-4 py-1 text-sm text-white bg-black"
-          onClick={() => console.log("simulation click")}
-        >
-          Go Simulation
-        </button> */}
       </div>
       <div>
         {/* <SymbolInfo
@@ -187,85 +187,6 @@ export default function Chart() {
           }}
         /> */}
         <div id="tvChart" ref={tvChartRef}></div>
-        {/* <AdvancedChart
-          widgetProps={{
-            symbol: "BINANCE:BTCUSDT",
-            // interval: "h",
-            range: "1D",
-            timezone: "Etc/UTC",
-            theme: "light",
-            style: "1",
-            locale: "en",
-            toolbar_bg: "#f1f3f6",
-            hide_side_toolbar: true,
-            withdateranges: true,
-            // hide_legend: true,
-            enable_publishing: false,
-            allow_symbol_change: true,
-            study_count_limit: 2,
-            // container_id: "tradingview_9aad7",
-            // studies_overrides: {
-            //   "moving average exponential.length": 20,
-            // },
-
-            studies: [
-              // {
-              // "ROC@tv-basicstudies",
-              // "StochasticRSI@tv-basicstudies",
-              // "MASimple@tv-basicstudies",
-              // {
-              //   id: "MAExp@tv-basicstudies",
-              //   version: 60,
-              //   inputs: {
-              //     length: 20,
-              //   },
-              // },
-              // {
-              //   id: "IchimokuCloud@tv-basicstudies",
-              //   version: 2.0,
-              // },
-              // {
-              //   id: "BB@tv-basicstudies",
-              //   inputs: {
-              //     length: 25,
-              //   },
-              // },
-              // {
-              //   id: "MASimple@tv-basicstudies",
-              //   inputs: {
-              //     length: 200,
-              //   },
-              // },
-              // {
-              //   id: "MASimple@tv-basicstudies",
-              //   inputs: {
-              //     length: 100,
-              //   },
-              // },
-              // {
-              //   id: "MASimple@tv-basicstudies",
-              //   inputs: {
-              //     length: 50,
-              //   },
-              // },
-              // {
-              //   id: "MASimple@tv-basicstudies",
-              //   inputs: {
-              //     length: 9,
-              //   },
-              // },
-              // {
-              //   id: "RSI@tv-basicstudies",
-              // },
-              // {
-              //   id: "RSI@tv-basicstudies",
-              //   inputs: {
-              //     length: 4,
-              //   },
-              // },
-            ],
-          }}
-        /> */}
       </div>
     </div>
   );

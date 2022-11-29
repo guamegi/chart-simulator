@@ -1,18 +1,21 @@
 import React, { forwardRef } from "react";
 import Image from "next/image";
+import useStore from "../store/store";
 
 // export default function AsssetPopup((props, ref)) {
 const AssetPopup = forwardRef((props, ref) => {
   const { modalOn, setModalOn, assetList, searchAssetList } = props;
+  const setSelectedAsset = useStore((state) => state.setSelectedAsset);
 
   const selectList = (asset) => {
     console.log("select asset ", asset);
     setModalOn(!modalOn);
 
-    // input 에 종목 표시 교체
+    // input 에 종목 표시
     ref.current.value = asset.display_name;
 
-    // TODO: 차트 변경
+    // 차트 변경
+    setSelectedAsset(asset.symbol);
   };
 
   const makeList = (asset) => {

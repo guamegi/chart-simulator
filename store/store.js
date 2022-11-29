@@ -16,11 +16,22 @@ const useStore = create(
   devtools((set) => ({
     assetList: [],
     indicatorList: [],
-    selectedAsset: "",
+    selectedAsset: "BTC",
     selectedIndicator: [],
+    chart: null,
+    setAssetList: (asset) => {
+      set(() => ({
+        assetList: [...asset],
+      }));
+    },
+    setIndicatorList: (indicator) => {
+      set(() => ({
+        indicatorList: [...indicator],
+      }));
+    },
     setSelectedAsset: (asset) => {
       set(() => ({
-        selectAsset: asset,
+        selectedAsset: asset,
       }));
     },
     setSelectedIndicator: (indicator) => {
@@ -28,14 +39,9 @@ const useStore = create(
         selectedIndicator: [...indicator],
       }));
     },
-    setAsset: (asset) => {
+    setChart: (chart) => {
       set(() => ({
-        assetList: [...asset],
-      }));
-    },
-    setIndicator: (indicator) => {
-      set(() => ({
-        indicatorList: [...indicator],
+        chart: chart,
       }));
     },
   }))

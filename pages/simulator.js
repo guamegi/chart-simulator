@@ -2,12 +2,16 @@ import Head from "next/head";
 import { useState } from "react";
 import { Navbar, Footer, Sidebar } from "../components/layouts";
 import { Result, Description } from "../components";
+import useStore from "../store/store";
 
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("../components/chart"), { ssr: false });
 
 function Simulator() {
   const [open, setOpen] = useState(true);
+
+  // store
+  const selectedAsset = useStore((state) => state.selectedAsset);
 
   return (
     <div>
@@ -53,7 +57,7 @@ function Simulator() {
               </button> */}
             </div>
             <div className="grid grid-cols-1 gap-6 my-3">
-              <Chart />
+              <Chart selectedAsset={selectedAsset} />
               <Result />
               <Description />
             </div>
