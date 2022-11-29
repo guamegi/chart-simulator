@@ -4,27 +4,33 @@ import { createChart, CrosshairMode } from "lightweight-charts";
 import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 
-// TODO: 클릭시, props = assetInfo, indicatorInfo 받아야 함
+/* props = assetInfo, indicatorInfo */
 export default function Chart(props) {
-  const selectedAsset = props.selectedAsset;
+  const { selectedAsset, selectedIndicator } = props;
   const tvChartRef = useRef(); // trading view
 
-  useEffect(() => {
-    console.log("컴포넌트가 화면에 나타남");
-    makeChart();
+  // useEffect(() => {
+  //   console.log("컴포넌트가 화면에 나타남");
+  //   makeChart();
 
-    return () => {
-      console.log("컴포넌트가 화면에서 사라짐");
-    };
-  }, []);
+  //   return () => {
+  //     console.log("컴포넌트가 화면에서 사라짐");
+  //   };
+  // }, []);
 
   useEffect(() => {
-    // console.log("selected");
+    console.log("selectedAsset:", selectedAsset);
     makeChart();
   }, [selectedAsset]);
 
+  useEffect(() => {
+    console.log("selectedIndicator:", selectedIndicator);
+    makeChart();
+  }, [selectedIndicator]);
+
   const makeChart = () => {
     tvChartRef.current.innerHTML = "";
+
     const chart = createChart(tvChartRef.current, {
       width: tvChartRef.current.offsetWidth,
       height: 500,
@@ -53,7 +59,7 @@ export default function Chart(props) {
         horzAlign: "center",
         vertAlign: "center",
         color: "rgba(171, 71, 188, 0.1)",
-        text: "Simple ChartBook",
+        text: "Chart Simulator",
       },
     });
 
@@ -80,6 +86,27 @@ export default function Chart(props) {
     // candle
     let candleSeries = chart.addCandlestickSeries();
     const filteredAsset = priceData.find((d) => d.symbol == selectedAsset);
+
+    /**
+     * 보조지표 세팅
+     */
+    // ma
+    if (filteredAsset !== undefined && selectedIndicator.length > 0) {
+      selectedIndicator.forEach((indicator) => {
+        // example: 'MA-5'
+        // TODO: 보조지표 구분 명확히 하기
+        const period = indicator.split("-")[1];
+        let smaData = calculateSMA(filteredAsset.data, period);
+        let smaLine = chart.addLineSeries({
+          color: "rgba(4, 111, 232, 1)",
+          lineWidth: 2,
+        });
+        // console.log("smaData:", smaData);
+        smaLine.setData(smaData);
+
+        // TODO: legend 추가
+      });
+    }
 
     // volume
     let volumeSeries = chart.addHistogramSeries({
@@ -190,4 +217,20 @@ export default function Chart(props) {
       </div>
     </div>
   );
+}
+
+function calculateSMA(data, count) {
+  var avg = function (data) {
+    var sum = 0;
+    for (var i = 0; i < data.length; i++) {
+      sum += data[i].close;
+    }
+    return sum / data.length;
+  };
+  var result = [];
+  for (var i = count - 1, len = data.length; i < len; i++) {
+    var val = avg(data.slice(i - count + 1, i));
+    result.push({ time: data[i].time, value: val });
+  }
+  return result;
 }

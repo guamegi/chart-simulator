@@ -9,6 +9,7 @@ export default function Sidebar({ open }) {
   const [searchAssetList, setSearchAssetList] = useState([]);
   const [searchIndicatorList, setSearchIndicatorList] = useState([]);
   const inputEl = useRef();
+  const setSelectedIndicator = useStore((state) => state.setSelectedIndicator);
 
   useEffect(() => {
     // 종목 초기값 세팅
@@ -47,6 +48,13 @@ export default function Sidebar({ open }) {
     );
     // console.log(list);
     setSearchIndicatorList(list);
+  };
+
+  // 보조지표 리스트 클릭
+  const clickList = (e) => {
+    const code = e.target.getAttribute("code");
+    console.log(code);
+    setSelectedIndicator(code);
   };
 
   const makeIndicatorList = (indicator) => {
@@ -201,9 +209,4 @@ export default function Sidebar({ open }) {
       </div>
     </div>
   );
-}
-
-function clickList(e) {
-  const code = e.target.getAttribute("code");
-  console.log(code);
 }

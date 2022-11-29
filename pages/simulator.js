@@ -9,9 +9,8 @@ const Chart = dynamic(() => import("../components/chart"), { ssr: false });
 
 function Simulator() {
   const [open, setOpen] = useState(true);
-
-  // store
   const selectedAsset = useStore((state) => state.selectedAsset);
+  const selectedIndicator = useStore((state) => state.selectedIndicator);
 
   return (
     <div>
@@ -57,7 +56,10 @@ function Simulator() {
               </button> */}
             </div>
             <div className="grid grid-cols-1 gap-6 my-3">
-              <Chart selectedAsset={selectedAsset} />
+              <Chart
+                selectedAsset={selectedAsset}
+                selectedIndicator={selectedIndicator}
+              />
               <Result />
               <Description />
             </div>

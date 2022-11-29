@@ -1,17 +1,6 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 
-// const store = create((set) => ({
-//   assetList: [],
-//   addAsset: (asset) => {
-//     set((state) => ({
-//       assetList: [...state.assetList, asset],
-//     }));
-//   },
-//   indicatorList: [],
-// }));
-// const useStore = create(devtools(store));
-
 const useStore = create(
   devtools((set) => ({
     assetList: [],
@@ -19,6 +8,7 @@ const useStore = create(
     selectedAsset: "BTC",
     selectedIndicator: [],
     chart: null,
+
     setAssetList: (asset) => {
       set(() => ({
         assetList: [...asset],
@@ -36,7 +26,7 @@ const useStore = create(
     },
     setSelectedIndicator: (indicator) => {
       set(() => ({
-        selectedIndicator: [...indicator],
+        selectedIndicator: [indicator],
       }));
     },
     setChart: (chart) => {
