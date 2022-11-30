@@ -88,7 +88,7 @@ export default function Chart() {
     // candle
     let candleSeries = chart.addCandlestickSeries();
     const filteredAsset = priceData.find(
-      (d) => d.symbol == selectedAsset[0].symbol
+      (d) => d.symbol == selectedAsset.symbol
     );
 
     /**
@@ -123,7 +123,7 @@ export default function Chart() {
       },
     });
     const filteredVolume = volumeData.find(
-      (d) => d.symbol == selectedAsset[0].symbol
+      (d) => d.symbol == selectedAsset.symbol
     );
 
     if (filteredAsset && filteredVolume) {
@@ -163,7 +163,7 @@ export default function Chart() {
   return (
     <div className="w-full h-full bg-white border border-slate-300">
       <div className="p-3 font-medium text-gray-500 border-b truncate">
-        {selectedAsset[0].display_name}
+        {selectedAsset.display_name}
       </div>
       <div className="flex p-3 text-gray-500 border-b">
         <div className="">

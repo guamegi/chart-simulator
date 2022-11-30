@@ -14,12 +14,8 @@ export default function Sidebar({ open }) {
   const setIndicatorList = useStore((state) => state.setIndicatorList);
 
   useEffect(() => {
-    // 종목 초기값 세팅
-    if (!selectedAsset.length) {
-      inputEl.current.value = assetList[0].display_name;
-    } else {
-      inputEl.current.value = selectedAsset[0].display_name;
-    }
+    // 종목 표시
+    inputEl.current.value = selectedAsset.display_name;
     setIndicatorList(indicatorList);
   }, []);
 

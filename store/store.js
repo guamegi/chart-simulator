@@ -5,17 +5,14 @@ const useStore = create(
   devtools((set) => ({
     assetList: [],
     indicatorList: [],
-    // selectedAsset: "BTC",
-    selectedAsset: [
-      {
-        name: "bitcoin",
-        display_name: "Bitcoin",
-        symbol: "BTC",
-        code_set: "KRW-BTC",
-        category: "coin",
-        src: "/image/btc.png",
-      },
-    ],
+    selectedAsset: {
+      name: "bitcoin",
+      display_name: "Bitcoin",
+      symbol: "BTC",
+      code_set: "KRW-BTC",
+      category: "coin",
+      src: "/image/btc.png",
+    },
     selectedIndicator: [],
 
     setAssetList: (asset) => {
@@ -30,8 +27,7 @@ const useStore = create(
     },
     setSelectedAsset: (asset) => {
       set(() => ({
-        // selectedAsset: asset,
-        selectedAsset: [{ ...asset }],
+        selectedAsset: { ...asset },
       }));
     },
     setSelectedIndicator: (indicator) => {
