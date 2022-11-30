@@ -3,11 +3,13 @@ import { useEffect, useRef } from "react";
 import { createChart, CrosshairMode } from "lightweight-charts";
 import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
+import useStore from "../store/store";
 
-/* props = assetInfo, indicatorInfo */
-export default function Chart(props) {
-  const { selectedAsset, selectedIndicator } = props;
+export default function Chart() {
   const tvChartRef = useRef(); // trading view
+  const indicatorList = useStore((state) => state.indicatorList);
+  const selectedAsset = useStore((state) => state.selectedAsset);
+  const selectedIndicator = useStore((state) => state.selectedIndicator);
 
   // useEffect(() => {
   //   console.log("컴포넌트가 화면에 나타남");
@@ -85,25 +87,26 @@ export default function Chart(props) {
     // symbol 별 데이터 호출, assetPopup에서 눌린 종목으로 차트 데이터 로딩.
     // candle
     let candleSeries = chart.addCandlestickSeries();
-    const filteredAsset = priceData.find((d) => d.symbol == selectedAsset);
+    const filteredAsset = priceData.find(
+      (d) => d.symbol == selectedAsset[0].symbol
+    );
 
     /**
      * 보조지표 세팅
      */
     // ma
     if (filteredAsset !== undefined && selectedIndicator.length > 0) {
-      selectedIndicator.forEach((indicator) => {
+      selectedIndicator.forEach((indicatorName) => {
         // example: 'MA-5'
         // TODO: 보조지표 구분 명확히 하기
-        const period = indicator.split("-")[1];
+        const period = indicatorName.split("-")[1];
         let smaData = calculateSMA(filteredAsset.data, period);
         let smaLine = chart.addLineSeries({
-          color: "rgba(4, 111, 232, 1)",
+          color: indicatorList.find((t) => t.code === indicatorName).color,
           lineWidth: 2,
         });
         // console.log("smaData:", smaData);
         smaLine.setData(smaData);
-
         // TODO: legend 추가
       });
     }
@@ -119,7 +122,9 @@ export default function Chart(props) {
         bottom: 0,
       },
     });
-    const filteredVolume = volumeData.find((d) => d.symbol == selectedAsset);
+    const filteredVolume = volumeData.find(
+      (d) => d.symbol == selectedAsset[0].symbol
+    );
 
     if (filteredAsset && filteredVolume) {
       candleSeries.setData(filteredAsset.data);
@@ -158,7 +163,7 @@ export default function Chart(props) {
   return (
     <div className="w-full h-full bg-white border border-slate-300">
       <div className="p-3 font-medium text-gray-500 border-b truncate">
-        {selectedAsset}
+        {selectedAsset[0].display_name}
       </div>
       <div className="flex p-3 text-gray-500 border-b">
         <div className="">

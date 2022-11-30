@@ -15,7 +15,7 @@ const AssetPopup = forwardRef((props, ref) => {
     ref.current.value = asset.display_name;
 
     // 차트 변경
-    setSelectedAsset(asset.symbol);
+    setSelectedAsset(asset);
   };
 
   const makeList = (asset) => {

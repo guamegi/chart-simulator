@@ -9,16 +9,19 @@ export default function Sidebar({ open }) {
   const [searchAssetList, setSearchAssetList] = useState([]);
   const [searchIndicatorList, setSearchIndicatorList] = useState([]);
   const inputEl = useRef();
+  const selectedAsset = useStore((state) => state.selectedAsset);
   const setSelectedIndicator = useStore((state) => state.setSelectedIndicator);
+  const setIndicatorList = useStore((state) => state.setIndicatorList);
 
   useEffect(() => {
     // 종목 초기값 세팅
-    inputEl.current.value = assetList[0].display_name;
+    if (!selectedAsset.length) {
+      inputEl.current.value = assetList[0].display_name;
+    } else {
+      inputEl.current.value = selectedAsset[0].display_name;
+    }
+    setIndicatorList(indicatorList);
   }, []);
-
-  // store 에 저장(assetList)
-  // const setAssetList = useStore((state) => state.setAssetList);
-  // setAssetList(assetList);
 
   const assetOnClick = () => setModalOn(!modalOn);
   const assetOnBlur = () => {
