@@ -7,26 +7,15 @@ import useStore from "../store/store";
 
 export default function Chart() {
   const tvChartRef = useRef(); // trading view
-  const indicatorList = useStore((state) => state.indicatorList);
-  const selectedAsset = useStore((state) => state.selectedAsset);
-  const selectedIndicator = useStore((state) => state.selectedIndicator);
-
-  // useEffect(() => {
-  //   console.log("컴포넌트가 화면에 나타남");
-  //   makeChart();
-
-  //   return () => {
-  //     console.log("컴포넌트가 화면에서 사라짐");
-  //   };
-  // }, []);
+  const { indicatorList, selectedAsset, selectedIndicator } = useStore();
 
   useEffect(() => {
-    console.log("selectedAsset:", selectedAsset);
+    // console.log("selectedAsset:", selectedAsset);
     makeChart();
   }, [selectedAsset]);
 
   useEffect(() => {
-    console.log("selectedIndicator:", selectedIndicator);
+    // console.log("selectedIndicator:", selectedIndicator);
     makeChart();
   }, [selectedIndicator]);
 
@@ -96,13 +85,13 @@ export default function Chart() {
      */
     // ma
     if (filteredAsset !== undefined && selectedIndicator.length > 0) {
-      selectedIndicator.forEach((indicatorName) => {
+      selectedIndicator.forEach((indicator) => {
         // example: 'MA-5'
         // TODO: 보조지표 구분 명확히 하기
-        const period = indicatorName.split("-")[1];
+        const period = indicator.code.split("-")[1];
         let smaData = calculateSMA(filteredAsset.data, period);
         let smaLine = chart.addLineSeries({
-          color: indicatorList.find((t) => t.code === indicatorName).color,
+          color: indicatorList.find((t) => t.code === indicator.code).color,
           lineWidth: 2,
         });
         // console.log("smaData:", smaData);

@@ -31,11 +31,19 @@ const useStore = create(
       }));
     },
     setSelectedIndicator: (indicator) => {
+      // selectIndicator와 비교. 있으면 빼고, 없으면 추가
+      // TODO: 3개 까지 제한 걸기
       set((state) => ({
-        selectedIndicator: [
-          ...state.selectedIndicator.filter((t) => t !== indicator),
-          indicator,
-        ],
+        selectedIndicator:
+          state.selectedIndicator.length > 0
+            ? state.selectedIndicator.indexOf(indicator) > -1
+              ? [
+                  ...state.selectedIndicator.filter(
+                    (t) => t.code !== indicator.code
+                  ),
+                ]
+              : [...state.selectedIndicator, indicator]
+            : [indicator],
       }));
     },
   }))

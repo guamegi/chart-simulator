@@ -9,15 +9,37 @@ export default function Sidebar({ open }) {
   const [searchAssetList, setSearchAssetList] = useState([]);
   const [searchIndicatorList, setSearchIndicatorList] = useState([]);
   const inputEl = useRef();
-  const selectedAsset = useStore((state) => state.selectedAsset);
-  const setSelectedIndicator = useStore((state) => state.setSelectedIndicator);
-  const setIndicatorList = useStore((state) => state.setIndicatorList);
+  const indicatorListEl = useRef();
+  const {
+    selectedAsset,
+    selectedIndicator,
+    setSelectedIndicator,
+    setIndicatorList,
+  } = useStore();
 
   useEffect(() => {
     // 종목 표시
     inputEl.current.value = selectedAsset.display_name;
     setIndicatorList(indicatorList);
   }, []);
+
+  useEffect(() => {
+    // indicator list 토글 처리
+    // console.log(indicatorListEl);
+
+    // 전체 색상 초기화
+    indicatorListEl.current.childNodes.forEach((list) => {
+      list.style.color = "black";
+    });
+
+    // 선택한 리스트 색상 변경
+    indicatorListEl.current.childNodes.forEach((list) => {
+      const code = list.getAttribute("code");
+      selectedIndicator.forEach((ele) => {
+        if (ele.code === code) list.style.color = "red";
+      });
+    });
+  }, [selectedIndicator]);
 
   const assetOnClick = () => setModalOn(!modalOn);
   const assetOnBlur = () => {
@@ -52,8 +74,11 @@ export default function Sidebar({ open }) {
   // 보조지표 리스트 클릭
   const clickList = (e) => {
     const code = e.target.getAttribute("code");
-    console.log(code);
-    setSelectedIndicator(code);
+
+    // set indicator
+    const filterdIndicator = indicatorList.find((t) => t.code == code);
+    // console.log("code:", code, "filterdIndicator:", filterdIndicator);
+    setSelectedIndicator(filterdIndicator);
   };
 
   const makeIndicatorList = (indicator) => {
@@ -170,39 +195,12 @@ export default function Sidebar({ open }) {
         </div>
         {/* indicator list */}
         <div className="flex-1">
-          <ul className="pt-2 pb-4 space-y-1 text-sm">
+          <ul className="pt-2 pb-4 space-y-1 text-sm" ref={indicatorListEl}>
             {searchIndicatorList.length > 0
               ? searchIndicatorList.map((indicator) =>
                   makeIndicatorList(indicator)
                 )
               : indicatorList.map((indicator) => makeIndicatorList(indicator))}
-
-            {/* {indicatorList.map((indicator) => {
-              return (
-                <li
-                  key={indicator.code}
-                  className="flex items-center p-2 space-x-3 rounded-sm cursor-pointer"
-                  code={indicator.code}
-                  onClick={clickList}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5 text-gray-800 mx-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d={indicator.path}
-                    />
-                  </svg>
-                  {indicator.display_name}
-                </li>
-              );
-            })} */}
           </ul>
         </div>
       </div>
