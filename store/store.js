@@ -11,7 +11,7 @@ const useStore = create(
       symbol: "BTC",
       code_set: "KRW-BTC",
       category: "coin",
-      src: "/image/btc.png",
+      src: "/image/symbol/btc.png",
     },
     selectedIndicator: [],
 

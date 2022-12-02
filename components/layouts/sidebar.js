@@ -9,6 +9,7 @@ export default function Sidebar({ open }) {
   const [modalOn, setModalOn] = useState(false);
   const [searchAssetList, setSearchAssetList] = useState([]);
   const [searchIndicatorList, setSearchIndicatorList] = useState([]);
+  const assetBoxEl = useRef();
   const inputEl = useRef();
   const indicatorListEl = useRef();
   const {
@@ -19,7 +20,7 @@ export default function Sidebar({ open }) {
   } = useStore();
 
   useEffect(() => {
-    // 종목 표시
+    // 종목 표시 초기화
     inputEl.current.value = selectedAsset.display_name;
     setIndicatorList(indicatorList);
   }, []);
@@ -128,16 +129,24 @@ export default function Sidebar({ open }) {
         <div className="space-y-3 pb-4 border-b">
           {/* asset box */}
           <div
+            ref={assetBoxEl}
             className="relative border border-slate-300 hover:border-slate-400"
             onClick={assetOnClick}
             onBlur={assetOnBlur}
           >
+            <Image
+              src="/image/symbol/btc.png"
+              className="absolute ml-2 my-1.5"
+              alt="asset icon"
+              width={16}
+              height={16}
+            ></Image>
             <input
               ref={inputEl}
               type="search"
               name="Search"
               placeholder="Search Assets"
-              className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
+              className="w-full py-1 pl-7 pr-10 text-sm rounded-md focus:outline-none"
               // value={assetList[0].name}
               onChange={searchAsset}
             />
@@ -167,6 +176,7 @@ export default function Sidebar({ open }) {
               setModalOn={setModalOn}
               assetList={assetList}
               searchAssetList={searchAssetList}
+              assetBoxEl={assetBoxEl}
               ref={inputEl}
             />
           )}

@@ -4,7 +4,7 @@ import useStore from "../store/store";
 
 // export default function AsssetPopup((props, ref)) {
 const AssetPopup = forwardRef((props, ref) => {
-  const { modalOn, setModalOn, assetList, searchAssetList } = props;
+  const { modalOn, setModalOn, assetList, searchAssetList, assetBoxEl } = props;
   const setSelectedAsset = useStore((state) => state.setSelectedAsset);
 
   const selectList = (asset) => {
@@ -12,8 +12,8 @@ const AssetPopup = forwardRef((props, ref) => {
     setModalOn(!modalOn);
 
     // input 에 종목 표시
+    assetBoxEl.current.childNodes[0].srcset = asset.src;
     ref.current.value = asset.display_name;
-
     // 차트 변경
     setSelectedAsset(asset);
   };
