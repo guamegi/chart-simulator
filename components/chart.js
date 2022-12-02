@@ -4,7 +4,15 @@ import { createChart, CrosshairMode } from "lightweight-charts";
 import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 import useStore from "../store/store";
+import { calculateSMA } from "../common/formula";
 
+// indicator legend color
+const colors = {
+  MA5: "text-[#ff0000]",
+  MA10: "text-[#18e7e7]",
+  MA20: "text-[#0000ff]",
+  MA60: "text-[#ff00ff]",
+};
 export default function Chart() {
   const tvChartRef = useRef(); // trading view
   const { indicatorList, selectedAsset, selectedIndicator } = useStore();
@@ -83,20 +91,39 @@ export default function Chart() {
     /**
      * 보조지표 세팅
      */
-    // ma
     if (filteredAsset !== undefined && selectedIndicator.length > 0) {
+      // legend 영역
+      const legend = document.createElement("div");
+      legend.classList.add("absolute", "top-3", "left-3", "z-10");
+      tvChartRef.current.appendChild(legend);
+
       selectedIndicator.forEach((indicator) => {
         // example: 'MA-5'
-        // TODO: 보조지표 구분 명확히 하기
-        const period = indicator.code.split("-")[1];
-        let smaData = calculateSMA(filteredAsset.data, period);
-        let smaLine = chart.addLineSeries({
-          color: indicatorList.find((t) => t.code === indicator.code).color,
-          lineWidth: 2,
-        });
-        // console.log("smaData:", smaData);
-        smaLine.setData(smaData);
-        // TODO: legend 추가
+        // 보조지표 구분 명확히 하기
+        if (indicator.code.includes("MA-")) {
+          const period = indicator.code.split("-")[1];
+          let smaData = calculateSMA(filteredAsset.data, period);
+          let smaLine = chart.addLineSeries({
+            color: indicatorList.find((t) => t.code === indicator.code).color,
+            lineWidth: 1,
+          });
+          smaLine.setData(smaData);
+        } else {
+          // 'MA'가 아닌 보조지표
+        }
+
+        // legend 추가
+        const color = colors[indicator.name] || "text-gray-500";
+        const firstRow = document.createElement("div");
+        // ** className을 동적으로 생성하면 tailwindcss 에서 인식안됨 **
+        // firstRow.classList.add("text-xs", `text-[${indicator.color}]`);
+        firstRow.classList.add("text-xs", color);
+        firstRow.innerText = indicator.code;
+        legend.appendChild(firstRow);
+
+        // const col = colors[indicator.name];
+        // const firstRow = `<div class="text-xs ${col}">${indicator.code}</div>`;
+        // legend.insertAdjacentHTML("beforeend", firstRow);
       });
     }
 
@@ -207,24 +234,8 @@ export default function Chart() {
             isTransparent: false,
           }}
         /> */}
-        <div id="tvChart" ref={tvChartRef}></div>
+        <div id="tvChart" ref={tvChartRef} className="relative"></div>
       </div>
     </div>
   );
-}
-
-function calculateSMA(data, count) {
-  var avg = function (data) {
-    var sum = 0;
-    for (var i = 0; i < data.length; i++) {
-      sum += data[i].close;
-    }
-    return sum / data.length;
-  };
-  var result = [];
-  for (var i = count - 1, len = data.length; i < len; i++) {
-    var val = avg(data.slice(i - count + 1, i));
-    result.push({ time: data[i].time, value: val });
-  }
-  return result;
 }
