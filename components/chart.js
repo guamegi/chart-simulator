@@ -6,8 +6,7 @@ import { volumeData } from "../data/volumeData";
 import useStore from "../store/store";
 import { calculateSMA } from "../common/formula";
 
-// indicator legend color
-const colors = {
+const legendColors = {
   MA5: "text-[#ff0000]",
   MA10: "text-[#18e7e7]",
   MA20: "text-[#0000ff]",
@@ -113,7 +112,7 @@ export default function Chart() {
         }
 
         // legend 추가
-        const color = colors[indicator.name] || "text-gray-500";
+        const color = legendColors[indicator.name] || "text-gray-500";
         const firstRow = document.createElement("div");
         // ** className을 동적으로 생성하면 tailwindcss 에서 인식안됨 **
         // firstRow.classList.add("text-xs", `text-[${indicator.color}]`);
