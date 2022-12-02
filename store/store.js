@@ -44,6 +44,19 @@ const useStore = create(
                 ]
               : [...state.selectedIndicator, indicator]
             : [indicator],
+
+        // selectedIndicator:
+        //   state.selectedIndicator.length == 0
+        //     ? [indicator]
+        //     : state.selectedIndicator.length < 3
+        //     ? state.selectedIndicator.indexOf(indicator) > -1
+        //       ? [
+        //           ...state.selectedIndicator.filter(
+        //             (t) => t.code !== indicator.code
+        //           ),
+        //         ]
+        //       : [...state.selectedIndicator, indicator]
+        //     : [...state.selectedIndicator],
       }));
     },
   }))
