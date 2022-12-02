@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { assetList } from "../../data/assetList";
 import { indicatorList } from "../../data/indicatorList";
 import useStore from "../../store/store";
@@ -24,19 +25,21 @@ export default function Sidebar({ open }) {
   }, []);
 
   useEffect(() => {
-    // indicator list 토글 처리
-    // console.log(indicatorListEl);
+    // indicator list 토글 표시 처리
 
     // 전체 색상 초기화
     indicatorListEl.current.childNodes.forEach((list) => {
-      list.style.color = "black";
+      // list.childNodes[2].src = "/image/unchecked.png";
+      list.childNodes[1].srcset = "/image/unchecked.png";
     });
 
     // 선택한 리스트 색상 변경
     indicatorListEl.current.childNodes.forEach((list) => {
       const code = list.getAttribute("code");
       selectedIndicator.forEach((ele) => {
-        if (ele.code === code) list.style.color = "red";
+        if (ele.code === code) {
+          list.childNodes[1].srcset = "/image/checked.png";
+        }
       });
     });
   }, [selectedIndicator]);
@@ -73,11 +76,12 @@ export default function Sidebar({ open }) {
 
   // 보조지표 리스트 클릭
   const clickList = (e) => {
+    e.stopPropagation();
     const code = e.target.getAttribute("code");
-
+    console.log(e.target);
     // set indicator
     const filterdIndicator = indicatorList.find((t) => t.code == code);
-    // console.log("code:", code, "filterdIndicator:", filterdIndicator);
+    console.log("code:", code, "filterdIndicator:", filterdIndicator);
     setSelectedIndicator(filterdIndicator);
   };
 
@@ -89,21 +93,29 @@ export default function Sidebar({ open }) {
         code={indicator.code}
         onClick={clickList}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 text-gray-800 mx-2"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d={indicator.path}
-          />
-        </svg>
+        {/* <div className="w-5 h-5 text-gray-800 mx-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d={indicator.path}
+            />
+          </svg>
+        </div> */}
         {indicator.display_name}
+        <Image
+          src="/image/unchecked.png"
+          className="ml-auto"
+          alt="checkbox"
+          width={20}
+          height={20}
+        />
       </li>
     );
   };
