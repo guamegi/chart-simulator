@@ -77,11 +77,12 @@ export default function Sidebar({ open }) {
   // 보조지표 리스트 클릭
   const clickList = (e) => {
     e.stopPropagation();
+    e.preventDefault();
     const code = e.target.getAttribute("code");
-    console.log(e.target);
+
     // set indicator
     const filterdIndicator = indicatorList.find((t) => t.code == code);
-    console.log("code:", code, "filterdIndicator:", filterdIndicator);
+    // console.log("code:", code, "filterdIndicator:", filterdIndicator);
     setSelectedIndicator(filterdIndicator);
   };
 
@@ -111,7 +112,7 @@ export default function Sidebar({ open }) {
         {indicator.display_name}
         <Image
           src="/image/unchecked.png"
-          className="ml-auto"
+          className="ml-auto pointer-events-none"
           alt="checkbox"
           width={20}
           height={20}
