@@ -2,7 +2,6 @@ import Head from "next/head";
 import { useState } from "react";
 import { Navbar, Footer, Sidebar } from "../components/layouts";
 import { Result, Description } from "../components";
-
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("../components/chart"), { ssr: false });
 

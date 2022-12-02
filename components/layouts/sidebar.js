@@ -26,14 +26,13 @@ export default function Sidebar({ open }) {
 
   useEffect(() => {
     // indicator list 토글 표시 처리
-
-    // 전체 색상 초기화
+    // 전체 이미지 초기화
     indicatorListEl.current.childNodes.forEach((list) => {
       // list.childNodes[2].src = "/image/unchecked.png";
       list.childNodes[1].srcset = "/image/unchecked.png";
     });
 
-    // 선택한 리스트 색상 변경
+    // 선택한 리스트 이미지 변경
     indicatorListEl.current.childNodes.forEach((list) => {
       const code = list.getAttribute("code");
       selectedIndicator.forEach((ele) => {
@@ -59,7 +58,7 @@ export default function Sidebar({ open }) {
     const list = assetList.filter((asset) =>
       asset.name.toLocaleLowerCase().includes(e.target.value.toLowerCase())
     );
-    // console.log(list);
+
     setSearchAssetList(list);
   };
 
@@ -70,14 +69,12 @@ export default function Sidebar({ open }) {
     const list = indicatorList.filter((indicator) =>
       indicator.display_name.toLocaleLowerCase().includes(text)
     );
-    // console.log(list);
+
     setSearchIndicatorList(list);
   };
 
   // 보조지표 리스트 클릭
   const clickList = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
     const code = e.target.getAttribute("code");
 
     // set indicator

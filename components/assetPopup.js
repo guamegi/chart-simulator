@@ -8,7 +8,7 @@ const AssetPopup = forwardRef((props, ref) => {
   const setSelectedAsset = useStore((state) => state.setSelectedAsset);
 
   const selectList = (asset) => {
-    console.log("select asset ", asset);
+    // console.log("select asset ", asset);
     setModalOn(!modalOn);
 
     // input 에 종목 표시
