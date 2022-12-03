@@ -9,7 +9,7 @@ const AssetPopup = forwardRef((props, ref) => {
 
   const selectList = (asset) => {
     // console.log("select asset ", asset);
-    setModalOn(!modalOn);
+    // setModalOn(!modalOn);
 
     // input 에 종목 표시
     assetBoxEl.current.childNodes[0].srcset = asset.src;
@@ -29,8 +29,9 @@ const AssetPopup = forwardRef((props, ref) => {
             width={16}
             height={16}
           />
-          <span className="ml-1">{asset.display_name}</span>
-          <span className="flex-1"></span>
+          <span className="ml-1 flex-1 text-ellipsis">
+            {asset.display_name}
+          </span>
           <span className="mr-1">
             <small>{asset.symbol}</small>
           </span>
