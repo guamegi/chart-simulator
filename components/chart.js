@@ -4,7 +4,7 @@ import { createChart, CrosshairMode } from "lightweight-charts";
 import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 import useStore from "../store/store";
-import { calculateSMA } from "../common/formula";
+import { calculateSMA } from "../common/formulas";
 
 const legendColors = {
   MA5: "text-[#ff0000]",
