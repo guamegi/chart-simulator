@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
+    "bollinger-bands": "^3.0.2",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
     "lightweight-charts": "^3.8.0",

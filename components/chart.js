@@ -5,16 +5,20 @@ import { priceData } from "../data/priceData";
 import { volumeData } from "../data/volumeData";
 import useStore from "../store/store";
 import { calculateSMA } from "../common/formulas";
+import boll from "bollinger-bands";
 
-const legendColors = {
-  MA5: "text-[#ff0000]",
-  MA10: "text-[#18e7e7]",
-  MA20: "text-[#0000ff]",
-  MA60: "text-[#ff00ff]",
-};
+const legendColors = {};
 export default function Chart() {
   const tvChartRef = useRef(); // trading view
   const { indicatorList, selectedAsset, selectedIndicator } = useStore();
+  // console.log(indicatorList);
+
+  useEffect(() => {
+    // chart line과 동일한 legend 색상 셋팅
+    indicatorList.forEach((list) => {
+      legendColors[list.name] = `text-[${list.color}]`;
+    });
+  }, []);
 
   useEffect(() => {
     // console.log("selectedAsset:", selectedAsset);
@@ -22,7 +26,6 @@ export default function Chart() {
   }, [selectedAsset]);
 
   useEffect(() => {
-    // console.log("selectedIndicator:", selectedIndicator);
     makeChart();
   }, [selectedIndicator]);
 
@@ -75,14 +78,10 @@ export default function Chart() {
     // lineSeries.setData([
     //   { time: "2018-12-12", value: 144.11 },
     //   { time: "2018-12-13", value: 131.74 },
-    //   { time: "2018-12-14", value: 121.74 },
-    //   { time: "2018-12-17", value: 130.74 },
-    //   { time: "2018-12-18", value: 121.74 },
+    //    ...
     // ]);
 
     // symbol 별 데이터 호출, assetPopup에서 눌린 종목으로 차트 데이터 로딩.
-    // candle
-    let candleSeries = chart.addCandlestickSeries();
     const filteredAsset = priceData.find(
       (d) => d.symbol == selectedAsset.symbol
     );
@@ -97,37 +96,87 @@ export default function Chart() {
       tvChartRef.current.appendChild(legend);
 
       selectedIndicator.forEach((indicator) => {
+        // data = {time:..., value:...}
+        let data = null;
         // example: 'MA-5'
         // 보조지표 구분 명확히 하기
         if (indicator.code.includes("MA-")) {
           const period = indicator.code.split("-")[1];
-          let smaData = calculateSMA(filteredAsset.data, period);
-          let smaLine = chart.addLineSeries({
+          data = calculateSMA(filteredAsset.data, period);
+          let line = chart.addLineSeries({
             color: indicatorList.find((t) => t.code === indicator.code).color,
             lineWidth: 1,
           });
-          smaLine.setData(smaData);
+          line.setData(data);
         } else {
           // 'MA'가 아닌 보조지표
+          /**
+           * BB: Bollinger band
+           */
+          if (indicator.code == "BB") {
+            // console.log(filteredAsset.data);
+            const arr = filteredAsset.data.map((t) => {
+              return { time: t.time, value: t.close };
+            });
+
+            const valArr = arr.map((t) => t.value);
+            const timeArr = arr.map((t) => {
+              return { time: t.time };
+            });
+            data = [...timeArr];
+            const bollData = boll(valArr, 20, 2);
+
+            const upperLine = chart.addLineSeries({
+              color: indicatorList.find((t) => t.code === indicator.code).color,
+              lineWidth: 2,
+            });
+            const midLine = chart.addLineSeries({
+              color: indicatorList.find((t) => t.code === indicator.code).color,
+              lineWidth: 1,
+            });
+            const lowerLine = chart.addLineSeries({
+              color: indicatorList.find((t) => t.code === indicator.code).color,
+              lineWidth: 2,
+            });
+
+            const bollUp = [],
+              bollMid = [],
+              bollLow = [];
+            if (bollData !== null || bollData !== undefined) {
+              // {time:..., value:...} new object 생성
+              for (let i = 0; i < data.length; i++) {
+                bollUp.push(
+                  Object.assign({ ...data[i] }, { value: bollData.upper[i] })
+                );
+                bollMid.push(
+                  Object.assign({ ...data[i] }, { value: bollData.mid[i] })
+                );
+                bollLow.push(
+                  Object.assign({ ...data[i] }, { value: bollData.lower[i] })
+                );
+              }
+              upperLine.setData(bollUp);
+              midLine.setData(bollMid);
+              lowerLine.setData(bollLow);
+            }
+          }
         }
 
         // legend 추가
         const color = legendColors[indicator.name] || "text-gray-500";
-        const firstRow = document.createElement("div");
-        // ** className을 동적으로 생성하면 tailwindcss 에서 인식안됨 **
-        // firstRow.classList.add("text-xs", `text-[${indicator.color}]`);
-        firstRow.classList.add("text-xs", color);
-        firstRow.innerText = indicator.code;
-        legend.appendChild(firstRow);
-
-        // const col = colors[indicator.name];
-        // const firstRow = `<div class="text-xs ${col}">${indicator.code}</div>`;
-        // legend.insertAdjacentHTML("beforeend", firstRow);
+        const legendRow = document.createElement("div");
+        // ** 아래처럼, className을 동적으로 생성하면 tailwindcss 에서 인식안됨 **
+        // legendRow.classList.add("text-xs", `text-[${indicator.color}]`);
+        legendRow.classList.add("text-xs", color);
+        legendRow.innerText = indicator.code;
+        legend.appendChild(legendRow);
       });
     }
 
+    // candle
+    const candleSeries = chart.addCandlestickSeries();
     // volume
-    let volumeSeries = chart.addHistogramSeries({
+    const volumeSeries = chart.addHistogramSeries({
       priceFormat: {
         type: "volume",
       },
