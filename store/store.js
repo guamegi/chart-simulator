@@ -66,6 +66,11 @@ const useStore = create(
         indicatorModalOn: !state.indicatorModalOn,
       }));
     },
+    clearSelectedIndicator: () => {
+      set(() => ({
+        selectedIndicator: [],
+      }));
+    },
   }))
 );
 
