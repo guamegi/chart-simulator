@@ -4,6 +4,7 @@ import { Navbar, Footer, Sidebar } from "../components/layouts";
 import { Result, Description } from "../components";
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("../components/chart"), { ssr: false });
+import IndicatorPopup from "../components/indicatorPopup";
 
 function Simulator() {
   const [open, setOpen] = useState(true);
@@ -55,6 +56,7 @@ function Simulator() {
               <Chart />
               <Result />
               <Description />
+              <IndicatorPopup />
             </div>
           </div>
         </div>

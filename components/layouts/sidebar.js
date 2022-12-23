@@ -17,6 +17,7 @@ export default function Sidebar({ open }) {
     selectedIndicator,
     setSelectedIndicator,
     setIndicatorList,
+    setIndicatorModalOn,
   } = useStore();
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function Sidebar({ open }) {
     }, 100);
   };
 
-  // 종목 검색 필터
+  /** 종목 검색 필터 */
   const searchAsset = (e) => {
     // console.log(e.target.value);
     // assetList에서 입력된 종목 검색
@@ -63,7 +64,7 @@ export default function Sidebar({ open }) {
     setSearchAssetList(list);
   };
 
-  // 보조지표 검색 필터
+  /** 보조지표 검색 필터 */
   const searchIndicator = (e) => {
     // console.log(e.target.value);
     const text = e.target.value.toLowerCase();
@@ -74,7 +75,7 @@ export default function Sidebar({ open }) {
     setSearchIndicatorList(list);
   };
 
-  // 보조지표 리스트 클릭
+  /** 보조지표 리스트 클릭 */
   const clickList = (e) => {
     const code = e.target.getAttribute("code");
 
@@ -82,6 +83,9 @@ export default function Sidebar({ open }) {
     const filterdIndicator = indicatorList.find((t) => t.code == code);
     // console.log("code:", code, "filterdIndicator:", filterdIndicator);
     setSelectedIndicator(filterdIndicator);
+
+    // indicator popup 띄우기 + popup 컨텐츠 변경
+    setIndicatorModalOn();
   };
 
   const makeIndicatorList = (indicator) => {
@@ -92,21 +96,6 @@ export default function Sidebar({ open }) {
         code={indicator.code}
         onClick={clickList}
       >
-        {/* <div className="w-5 h-5 text-gray-800 mx-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d={indicator.path}
-            />
-          </svg>
-        </div> */}
         {indicator.display_name}
         <Image
           src="/image/unchecked.png"

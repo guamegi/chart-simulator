@@ -14,6 +14,7 @@ const useStore = create(
       src: "/image/symbol/btc.png",
     },
     selectedIndicator: [],
+    indicatorModalOn: false,
 
     setAssetList: (asset) => {
       set(() => ({
@@ -57,6 +58,12 @@ const useStore = create(
         //         ]
         //       : [...state.selectedIndicator, indicator]
         //     : [...state.selectedIndicator],
+      }));
+    },
+
+    setIndicatorModalOn: () => {
+      set((state) => ({
+        indicatorModalOn: !state.indicatorModalOn,
       }));
     },
   }))

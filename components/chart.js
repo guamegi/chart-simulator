@@ -7,18 +7,26 @@ import useStore from "../store/store";
 import { calculateSMA } from "../common/formulas";
 import boll from "bollinger-bands";
 
-const legendColors = {};
+// const legendColors = {};
 export default function Chart() {
   const tvChartRef = useRef(); // trading view
   const { indicatorList, selectedAsset, selectedIndicator } = useStore();
   // console.log(indicatorList);
 
-  useEffect(() => {
-    // chart line과 동일한 legend 색상 셋팅
-    indicatorList.forEach((list) => {
-      legendColors[list.name] = `text-[${list.color}]`;
-    });
-  }, []);
+  // useEffect(() => {
+  //   // chart line과 동일한 legend 색상 셋팅
+  //   for (let list of indicatorList) {
+  //     if (list.code === "MA") {
+  //       for (let key in list.color) {
+  //         // legendColors[list.code + key] = `text-[${list.color[key]}]`;
+  //         legendColors[list.code + key] = "text-[" + list.color[key] + "]";
+  //       }
+  //       continue;
+  //     }
+  //     legendColors[list.code] = `text-[${list.color}]`;
+  //   }
+  //   console.log(legendColors);
+  // }, []);
 
   useEffect(() => {
     // console.log("selectedAsset:", selectedAsset);
@@ -90,21 +98,26 @@ export default function Chart() {
      * 보조지표 세팅
      */
     if (filteredAsset !== undefined && selectedIndicator.length > 0) {
+      // console.log("filteredAsset:", filteredAsset, selectedIndicator);
       // legend 영역
       const legend = document.createElement("div");
       legend.classList.add("absolute", "top-3", "left-3", "z-10");
       tvChartRef.current.appendChild(legend);
 
       selectedIndicator.forEach((indicator) => {
+        if (typeof indicator.color == "object") return;
         // data = {time:..., value:...}
         let data = null;
-        // example: 'MA-5'
         // 보조지표 구분 명확히 하기
-        if (indicator.code.includes("MA-")) {
-          const period = indicator.code.split("-")[1];
+        if (indicator.code == "MA") {
+          const period = indicator.name.split("MA")[1]
+            ? Number(indicator.name.split("MA")[1])
+            : 20;
           data = calculateSMA(filteredAsset.data, period);
+          // console.log("indicator color:", indicator.color, period);
           let line = chart.addLineSeries({
-            color: indicatorList.find((t) => t.code === indicator.code).color,
+            // color: indicatorList.find((t) => t.code === indicator.code).color,
+            color: indicator.color,
             lineWidth: 1,
           });
           line.setData(data);
@@ -163,13 +176,16 @@ export default function Chart() {
         }
 
         // legend 추가
-        const color = legendColors[indicator.name] || "text-gray-500";
-        const legendRow = document.createElement("div");
-        // ** 아래처럼, className을 동적으로 생성하면 tailwindcss 에서 인식안됨 **
+        // const legendRow = document.createElement("div");
+        // ** 아래처럼, className을 부분 동적으로 생성하면 tailwindcss 에서 인식안됨 ** => inline style로 해결
         // legendRow.classList.add("text-xs", `text-[${indicator.color}]`);
-        legendRow.classList.add("text-xs", color);
-        legendRow.innerText = indicator.code;
-        legend.appendChild(legendRow);
+        // legendRow.classList.add("text-xs", "text-[#ff0000]");
+        // legendRow.innerText = indicator.name;
+        // legend.appendChild(legendRow);
+
+        // console.log(indicator.color);
+        const legendRow = `<div class="text-xs" style="color:${indicator.color}">${indicator.name}</div>`;
+        legend.insertAdjacentHTML("beforeend", legendRow);
       });
     }
 
