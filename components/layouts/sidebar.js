@@ -5,12 +5,12 @@ import { indicatorList } from "../../data/indicatorList";
 import useStore from "../../store/store";
 import AssetPopup from "../assetPopup";
 
-export default function Sidebar({ open }) {
+export default function Sidebar({ toggleMenu }) {
   const [modalOn, setModalOn] = useState(false);
   const [searchAssetList, setSearchAssetList] = useState([]);
   const [searchIndicatorList, setSearchIndicatorList] = useState([]);
-  const assetBoxEl = useRef();
-  const inputEl = useRef();
+  const assetContainerEl = useRef();
+  const assetInputEl = useRef();
   const indicatorListEl = useRef();
   const {
     selectedAsset,
@@ -23,7 +23,7 @@ export default function Sidebar({ open }) {
 
   useEffect(() => {
     // 종목 표시 초기화
-    inputEl.current.value = selectedAsset.display_name;
+    assetInputEl.current.value = selectedAsset.display_name;
     setIndicatorList(indicatorList);
   }, []);
 
@@ -46,8 +46,8 @@ export default function Sidebar({ open }) {
     });
   }, [selectedIndicator]);
 
-  const assetOnClick = () => setModalOn(!modalOn);
-  const assetOnBlur = () => {
+  const onClickAsset = () => setModalOn(!modalOn);
+  const onBlurAsset = () => {
     // 종목 팝업 리스트 이벤트 안 먹는 문제로 딜레이 시킴
     setTimeout(() => {
       modalOn && setModalOn(false);
@@ -112,17 +112,17 @@ export default function Sidebar({ open }) {
   return (
     <div
       className={`${
-        open ? "translate-x-0 w-80 p-4" : "-translate-x-64 w-0"
+        toggleMenu ? "translate-x-0 w-80 p-4" : "-translate-x-64 w-0"
       } sticky flex flex-col h-screen bg-white shadow transition-[width] ease-in-out duration-300`}
     >
       <div className="space-y-3">
         <div className="space-y-3 pb-4 border-b">
           {/* asset box */}
           <div
-            ref={assetBoxEl}
+            ref={assetContainerEl}
             className="relative border border-slate-300 hover:border-slate-400"
-            onClick={assetOnClick}
-            onBlur={assetOnBlur}
+            onClick={onClickAsset}
+            onBlur={onBlurAsset}
           >
             <Image
               src="/image/symbol/btc.png"
@@ -132,7 +132,7 @@ export default function Sidebar({ open }) {
               height={16}
             ></Image>
             <input
-              ref={inputEl}
+              ref={assetInputEl}
               type="search"
               name="Search"
               placeholder="Search Assets"
@@ -162,12 +162,10 @@ export default function Sidebar({ open }) {
           {/* 종목 팝업 */}
           {modalOn && (
             <AssetPopup
-              modalOn={modalOn}
-              setModalOn={setModalOn}
               assetList={assetList}
               searchAssetList={searchAssetList}
-              assetBoxEl={assetBoxEl}
-              ref={inputEl}
+              assetContainerEl={assetContainerEl}
+              ref={assetInputEl}
             />
           )}
 
@@ -216,7 +214,7 @@ export default function Sidebar({ open }) {
                 className="w-3 h-5"
                 fill="none"
                 viewBox="0 -4 30 40"
-                stroke="#8C8C8C"
+                stroke="#6b7280"
                 strokeWidth={2}
               >
                 <path

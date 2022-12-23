@@ -10,9 +10,9 @@ export default function IndicatorPopup() {
   } = useStore();
   const lastSelIndic = selectedIndicator[selectedIndicator.length - 1];
   // console.log("lastSelIndic:", lastSelIndic);
-  const daysRef = useRef();
-  const buyRef = useRef();
-  const sellRef = useRef();
+  const daysEl = useRef();
+  const buyEl = useRef();
+  const sellEl = useRef();
 
   const onClose = () => {
     setIndicatorModalOn();
@@ -26,20 +26,20 @@ export default function IndicatorPopup() {
     const newData = {
       name:
         lastSelIndic.code == "MA"
-          ? lastSelIndic.code + daysRef.current.value
+          ? lastSelIndic.code + daysEl.current.value
           : lastSelIndic.code,
       // display_name: "Moving average",
       code: lastSelIndic.code,
       color:
         lastSelIndic.code == "MA"
-          ? lastSelIndic.color[daysRef.current.value]
+          ? lastSelIndic.color[daysEl.current.value]
           : lastSelIndic.color,
       path: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
       description: "",
       contents: {
-        days: [daysRef.current.value],
-        buy: [buyRef.current.value],
-        sell: [sellRef.current.value],
+        days: [daysEl.current.value],
+        buy: [buyEl.current.value],
+        sell: [sellEl.current.value],
       },
     };
     setSelectedIndicator(lastSelIndic); // 기존거 없애고
@@ -51,10 +51,6 @@ export default function IndicatorPopup() {
       className={`modal fade fixed bg-black bg-opacity-50 top-0 left-0 w-full h-full z-10 outline-none overflow-x-hidden overflow-y-auto ${
         indicatorModalOn ? "" : "hidden"
       }`}
-      // id="exampleModal"
-      // tabindex="-1"
-      // aria-labelledby="exampleModalLabel"
-      // aria-hidden="true"
     >
       <div className="modal-dialog relative w-fit h-auto m-auto top-1/4  pointer-events-none">
         <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
@@ -68,13 +64,11 @@ export default function IndicatorPopup() {
             <button
               type="button"
               className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-              // data-bs-dismiss="modal"
-              // aria-label="Close"
             ></button>
           </div>
           <div className="modal-body py-2 m-auto">
             Days :
-            <select ref={daysRef}>
+            <select ref={daysEl}>
               {lastSelIndic
                 ? lastSelIndic.contents.days.map((t, idx) => {
                     return <option key={idx}>{t}</option>;
@@ -84,7 +78,7 @@ export default function IndicatorPopup() {
           </div>
           <div className="modal-body py-2 m-auto">
             Buy :
-            <select ref={buyRef}>
+            <select ref={buyEl}>
               {lastSelIndic
                 ? lastSelIndic.contents.buy.map((t, idx) => {
                     return <option key={idx}>{t}</option>;
@@ -95,7 +89,7 @@ export default function IndicatorPopup() {
           </div>
           <div className="modal-body py-2 m-auto">
             Sell :
-            <select ref={sellRef}>
+            <select ref={sellEl}>
               {lastSelIndic
                 ? lastSelIndic.contents.sell.map((t, idx) => {
                     return <option key={idx}>{t}</option>;
@@ -123,7 +117,6 @@ export default function IndicatorPopup() {
           transition
           duration-150
           ease-in-out"
-              // data-bs-dismiss="modal"
               onClick={onClose}
             >
               Close

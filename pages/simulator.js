@@ -7,7 +7,7 @@ const Chart = dynamic(() => import("../components/chart"), { ssr: false });
 import IndicatorPopup from "../components/indicatorPopup";
 
 function Simulator() {
-  const [open, setOpen] = useState(true);
+  const [toggleMenu, setToggleMenu] = useState(true);
 
   return (
     <div>
@@ -21,13 +21,13 @@ function Simulator() {
       </header>
       <main className="border-t">
         <div className="flex bg-[#F7F8FA]">
-          <Sidebar open={open} />
+          <Sidebar toggleMenu={toggleMenu} />
           <div className="container mx-auto px-8 py-4">
             {/* content top button area */}
             <div className="flex">
               <button
                 className="bg-white border border-slate-300 hover:border-slate-400"
-                onClick={() => setOpen(!open)}
+                onClick={() => setToggleMenu(!toggleMenu)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

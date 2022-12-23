@@ -7,26 +7,10 @@ import useStore from "../store/store";
 import { calculateSMA } from "../common/formulas";
 import boll from "bollinger-bands";
 
-// const legendColors = {};
 export default function Chart() {
   const tvChartRef = useRef(); // trading view
   const { indicatorList, selectedAsset, selectedIndicator } = useStore();
   // console.log(indicatorList);
-
-  // useEffect(() => {
-  //   // chart line과 동일한 legend 색상 셋팅
-  //   for (let list of indicatorList) {
-  //     if (list.code === "MA") {
-  //       for (let key in list.color) {
-  //         // legendColors[list.code + key] = `text-[${list.color[key]}]`;
-  //         legendColors[list.code + key] = "text-[" + list.color[key] + "]";
-  //       }
-  //       continue;
-  //     }
-  //     legendColors[list.code] = `text-[${list.color}]`;
-  //   }
-  //   console.log(legendColors);
-  // }, []);
 
   useEffect(() => {
     // console.log("selectedAsset:", selectedAsset);
@@ -183,7 +167,6 @@ export default function Chart() {
         // legendRow.innerText = indicator.name;
         // legend.appendChild(legendRow);
 
-        // console.log(indicator.color);
         const legendRow = `<div class="text-xs" style="color:${indicator.color}">${indicator.name}</div>`;
         legend.insertAdjacentHTML("beforeend", legendRow);
       });
