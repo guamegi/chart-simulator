@@ -113,7 +113,7 @@ export default function Sidebar({ toggleMenu }) {
     <div
       className={`${
         toggleMenu ? "translate-x-0 w-80 p-4" : "-translate-x-64 w-0"
-      } sticky flex flex-col h-screen bg-white shadow transition-[width] ease-in-out duration-300`}
+      } sticky flex flex-col h-screen bg-white shadow`}
     >
       <div className="space-y-3">
         <div className="space-y-3 pb-4 border-b">

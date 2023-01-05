@@ -252,14 +252,14 @@ export default function Chart() {
         <div className="flex-1"></div>
         <div>
           {/* date picker */}
-          <div className="relative border border-slate-300 hover:border-slate-400">
+          {/* <div className="relative border border-slate-300 hover:border-slate-400">
             <input
               type="search"
               name="Search"
               placeholder="date picker"
               className="w-full py-1 pl-2 pr-10 text-sm rounded-md focus:outline-none"
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="flex p-3 text-gray-500 justify-end border-b">
