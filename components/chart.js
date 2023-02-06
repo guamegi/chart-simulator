@@ -11,6 +11,7 @@ export default function Chart() {
   const tvChartRef = useRef(); // trading view
   const { indicatorList, selectedAsset, selectedIndicator } = useStore();
   // console.log(indicatorList);
+  console.log(priceData);
 
   useEffect(() => {
     // console.log("selectedAsset:", selectedAsset);
@@ -21,7 +22,7 @@ export default function Chart() {
     makeChart();
   }, [selectedIndicator]);
 
-  const makeChart = () => {
+  const makeChart = (date = "ALL") => {
     tvChartRef.current.innerHTML = "";
 
     const chart = createChart(tvChartRef.current, {
@@ -74,9 +75,31 @@ export default function Chart() {
     // ]);
 
     // symbol 별 데이터 호출, assetPopup에서 눌린 종목으로 차트 데이터 로딩.
+    // TODO: 날짜 필터링 추가
     const filteredAsset = priceData.find(
       (d) => d.symbol == selectedAsset.symbol
     );
+    console.log("filter:", filteredAsset);
+    if (date !== "ALL") {
+      // data 날짜별 변경. "1M","6M","1Y"
+      // 데이터의 마지막 날짜 구해옴. 거기서 날짜만큼 뒤에서 계산해서 범위를 만듬. 최종적으로 추출
+      let lastDate = filteredAsset.data[filteredAsset.data.length - 1].time;
+      console.log("lastDate:", lastDate);
+
+      let startDate = "";
+      if (date === "1M") {
+        // startDate = lastDate.month - 1;
+        lastDate = "2020-01-01";
+        // filteredAsset.data[filteredAsset.data.length - 1].time = "2020-01-01";
+      } else if (date === "6M") {
+        lastDate.month < 7
+          ? lastDate.year - 1 && lastDate.month + 6
+          : lastDate.month - 6;
+      } else {
+      }
+      // console.log("ss:", startDate);
+      console.log("lastDate2:", lastDate);
+    }
 
     /**
      * 보조지표 세팅
@@ -232,21 +255,27 @@ export default function Chart() {
         <div className="">
           <button
             className="bg-gray-100 w-10 px-auto py-1 mx-1 text-sm border border-slate-300 hover:border-slate-400"
-            onClick={() => console.log("1D click")}
+            onClick={() => makeChart("1M")}
           >
-            1D
+            1M
           </button>
           <button
             className="bg-gray-100 w-10 px-auto py-1 mx-1 text-sm border border-slate-300 hover:border-slate-400"
-            onClick={() => console.log("1W click")}
+            onClick={() => makeChart("6M")}
           >
-            1W
+            6M
           </button>
           <button
             className="bg-gray-100 w-10 px-auto py-1 mx-1 text-sm border border-slate-300 hover:border-slate-400"
-            onClick={() => console.log("1Y click")}
+            onClick={() => makeChart("1Y")}
           >
             1Y
+          </button>
+          <button
+            className="bg-gray-100 w-10 px-auto py-1 mx-1 text-sm border border-slate-300 hover:border-slate-400"
+            onClick={() => makeChart("ALL")}
+          >
+            ALL
           </button>
         </div>
         <div className="flex-1"></div>
