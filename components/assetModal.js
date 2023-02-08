@@ -3,7 +3,7 @@ import Image from "next/image";
 import useStore from "../store/store";
 
 // export default function AsssetPopup((props, ref)) {
-const AssetPopup = forwardRef((props, ref) => {
+const AssetModal = forwardRef((props, ref) => {
   const { assetList, searchAssetList, assetContainerEl } = props;
   const setSelectedAsset = useStore((state) => state.setSelectedAsset);
 
@@ -55,5 +55,5 @@ const AssetPopup = forwardRef((props, ref) => {
 });
 
 // eslint 오류 방지
-AssetPopup.displayName = "AssetPopup";
-export default AssetPopup;
+AssetModal.displayName = "AssetModal";
+export default AssetModal;

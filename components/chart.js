@@ -74,7 +74,7 @@ export default function Chart() {
     //    ...
     // ]);
 
-    // symbol 별 데이터 호출, assetPopup에서 눌린 종목으로 차트 데이터 로딩.
+    // symbol 별 데이터 호출, assetModal에서 눌린 종목으로 차트 데이터 로딩.
     // TODO: 날짜 필터링 추가
     const filteredAsset = priceData.find(
       (d) => d.symbol == selectedAsset.symbol

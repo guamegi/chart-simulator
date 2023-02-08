@@ -3,7 +3,7 @@ import Image from "next/image";
 import { assetList } from "../../data/assetList";
 import { indicatorList } from "../../data/indicatorList";
 import useStore from "../../store/store";
-import AssetPopup from "../assetPopup";
+import AssetModal from "../assetModal";
 
 export default function Sidebar({ toggleMenu }) {
   const [modalOn, setModalOn] = useState(false);
@@ -161,7 +161,7 @@ export default function Sidebar({ toggleMenu }) {
 
           {/* 종목 팝업 */}
           {modalOn && (
-            <AssetPopup
+            <AssetModal
               assetList={assetList}
               searchAssetList={searchAssetList}
               assetContainerEl={assetContainerEl}

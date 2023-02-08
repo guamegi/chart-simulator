@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useStore from "../store/store";
 
-export default function IndicatorPopup() {
+export default function IndicatorModal() {
   const {
     selectedIndicator,
     setSelectedIndicator,
