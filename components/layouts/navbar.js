@@ -23,7 +23,7 @@ export default function Navbar() {
             <Link href="https://discord.gg/Ga3kp745r5">Discord</Link>
           </div> */}
       {/* </div> */}
-      <div className="flex justify-end px-2 flex content-end col-start-2 ">
+      {/* <div className="flex justify-end px-2 flex content-end col-start-2 ">
         <div className="login-button py-2 mx-2 hidden md:flex cursor-pointer">
           <Link href="/api/auth/login">Log in</Link>
         </div>
@@ -32,7 +32,7 @@ export default function Navbar() {
             Try for free
           </button>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
